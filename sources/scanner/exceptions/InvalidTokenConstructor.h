@@ -1,0 +1,16 @@
+//
+// Created by Dominik on 09.03.2023.
+//
+
+#ifndef COMPILATION_THEORY_AND_COMPILERS_INVALIDTOKENCONSTRUCTOR_H
+#define COMPILATION_THEORY_AND_COMPILERS_INVALIDTOKENCONSTRUCTOR_H
+
+#include <exception>
+
+class InvalidTokenConstructor: public std::exception {
+public:
+
+};
+
+
+#endif //COMPILATION_THEORY_AND_COMPILERS_INVALIDTOKENCONSTRUCTOR_H

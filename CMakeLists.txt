@@ -9,16 +9,17 @@ set(MAIN
         )
 
 set(SRC
-        sources/scanner/Token.cpp
+        sources/scanner/token/Token.cpp
         sources/scanner/Automata.cpp
         sources/scanner/Scanner.cpp
-        )
+        sources/scanner/exceptions/InvalidTokenConstructor.cpp sources/scanner/exceptions/InvalidTokenConstructor.h)
 
 set(COMPILER_FLAGS
         -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20
         )
 
 include_directories(sources/scanner)
+include_directories(sources/scanner/token)
 
 add_library(${PROJECT_NAME}-lib ${SRC})
 

@@ -10,13 +10,15 @@
 
 class Scanner {
 public:
-	Scanner() = default;
-	explicit Scanner(std::string i): input(std::move(i)) {}
+	Scanner(std::string in);
 	Token getToken();
 	bool isEmpty();
+public:
+
 private:
+	std::size_t index;
 	std::string input;
-	Automata A = Automata();
+	Automata A;
 };
 
 
