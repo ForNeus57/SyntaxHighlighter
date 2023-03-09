@@ -5,21 +5,5 @@
 #include "Automata.h"
 
 Automata::Automata() {
-
-}
-
-std::size_t Automata::translateInputToAutomataTable(char in) {
-	switch (in) {
-		case '+':
-			return 0;
-		case '-':
-			return 1;
-		default:
-			//	Throw error
-			throw std::exception();
-	}
-}
-
-void Automata::InitializeTokenTable() {
-
+	this->current_state_number = Automata::STARTING_STATE_NUMBER;
 }

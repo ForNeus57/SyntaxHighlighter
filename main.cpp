@@ -3,7 +3,6 @@
 //
 #include <iostream>
 #include <fstream>
-#include <regex>
 
 #include "Scanner.h"
 #include "Token.h"
@@ -21,7 +20,7 @@ int main(int argc, char *argv[]) {
 		Scanner s = Scanner(line);
 		while(!s.isEmpty()) {
 			Token t = s.getToken();
-			std::cout << t;
+			std::cout << t;				//	std::cout << s.getToken();
 		}
 	}
 

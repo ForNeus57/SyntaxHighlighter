@@ -10,7 +10,11 @@ Token Scanner::getToken() {
 	for(; !A.isInAcceptingState(); index++)
 		A.changeState(input[index]);
 
-	return Token('+', );
+	State s = A.getCurrentState();
+
+	A.reset();
+
+	return this->translateStateToToken(s);
 }
 bool Scanner::isEmpty() {
 	return this->index == this->input.size() - 1;

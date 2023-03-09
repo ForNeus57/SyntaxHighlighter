@@ -8,13 +8,22 @@
 #include "Token.h"
 #include "Automata.h"
 
+/**
+ * @brief
+ *
+ * @param	index
+ * @param	input
+ * @param	A
+ */
 class Scanner {
 public:
-	Scanner(std::string in);
+	explicit Scanner(std::string in);
 	Token getToken();
 	bool isEmpty();
 public:
 
+private:
+	Token translateStateToToken(State s);
 private:
 	std::size_t index;
 	std::string input;

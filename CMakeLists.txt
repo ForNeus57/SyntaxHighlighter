@@ -12,7 +12,9 @@ set(SRC
         sources/scanner/token/Token.cpp
         sources/scanner/Automata.cpp
         sources/scanner/Scanner.cpp
-        sources/scanner/exceptions/InvalidTokenConstructor.cpp sources/scanner/exceptions/InvalidTokenConstructor.h)
+        sources/scanner/exceptions/InvalidTokenConstructor.cpp
+        sources/scanner/token/InputAlphabet.cpp
+        )
 
 set(COMPILER_FLAGS
         -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20

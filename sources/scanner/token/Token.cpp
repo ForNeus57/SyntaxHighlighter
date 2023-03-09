@@ -2,32 +2,11 @@
 // Created by Dominik on 08.03.2023.
 //
 
-#include "Token.h"
-
 #include <utility>
 
-std::string printCodeType(CodeType type) {
-	switch (type) {
-		case LEFT_BRACKET:
-			return "LEFT_BRACKET";
-		case RIGHT_BRACKET:
-			return "RIGHT_BRACKET";
-		case TIMES:
-			return "TIMES";
-		case PLUS:
-			return "PLUS";
-		case MINUS:
-			return "MINUS";
-		case DIVIDED:
-			return "DIVIDED";
-		case INTEGER_NUMBER:
-			return "INTEGER_NUMBER";
-		case IDENTIFIER:
-			return "IDENTIFIER";
-	}
-}
+#include "Token.h"
 
-Token::Token(std::variant<int, char, std::string> v, Position coordinates): value(std::move(v)), attribute(coordinates) {
+Token::Token(std::variant<int, char, std::string> v, Attributes attribute): value(std::move(v)), attribute(attribute) {
 	if(std::holds_alternative<int>(this->value))
 		this->code = CodeType::INTEGER_NUMBER;
 	else if(std::holds_alternative<char>(this->value))
@@ -56,6 +35,6 @@ std::variant<int, char, std::string> Token::getValue() const {
 	return this->value;
 }
 
-Position Token::getAttribute() const {
+Attributes Token::getAttribute() const {
 	return this->attribute;
 }

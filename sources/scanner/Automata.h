@@ -17,10 +17,10 @@
  */
 class State {
 public:
-	State();
-	State(char i);
+	State(bool is_accepting);
 public:
 	int getNumber();
+	bool isAccepting();
 public:
 
 private:
@@ -38,21 +38,22 @@ public:
 	Automata();
 public:
 	void changeState(char in);
+	void reset();
+public:
+
+public:
 	State getCurrentState();
 	bool isInAcceptingState();
-	std::size_t translateInputToAutomataTable(char in);
 private:
-
+	void initializeSetOfStates();
+	void initializeSetOfTokens();
 public:
 	const static std::size_t STARTING_STATE_NUMBER = 0;
 private:
 	std::size_t current_state_number;
-	static std::array<Token, CODE_TYPE_SIZE> token_table = {
-			{
 
-			}
-	};
-	static std::array<char, CODE_TYPE_SIZE> input_to_state_number_converter;
+	std::array<State, STATE_NUMBER> set_of_states;
+	std::array<char, CODE_TYPE_SIZE> input_to_state_number_converter;
 	/**
 	 *	The schema for this automata table:
 	 *	State_number	|	Input '+'	|	Input '-'	|	Input '*'	|	Input '/'	|	Input '('	|	Input '('	|	Input 'Number'	|	Input 'character'
@@ -62,7 +63,7 @@ private:
 	 *	2 - Success '+'	|				|				|				|				|				|				|					|
 	 *	3 - Success '-' |				|				|				|				|				|				|					|
 	 */
-	const std::array<std::array<std::size_t, STATE_NUMBER>, CODE_TYPE_SIZE> automata_table = {
+	std::array<std::array<std::size_t, STATE_NUMBER>, CODE_TYPE_SIZE> transition_table = {
 		{
 			{0,	0,	0,	0,	0,	0,	0,	0},
 			{},
