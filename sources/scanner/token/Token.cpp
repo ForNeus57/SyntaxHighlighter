@@ -2,18 +2,13 @@
 // Created by Dominik on 08.03.2023.
 //
 
-#include <utility>
-
 #include "Token.h"
 
-Token::Token(std::variant<int, char, std::string> v, Attributes attribute): value(std::move(v)), attribute(attribute) {
-	if(std::holds_alternative<int>(this->value))
-		this->code = CodeType::INTEGER_NUMBER;
-	else if(std::holds_alternative<char>(this->value))
-		this->code = static_cast<CodeType>(get<char>(this->value));
-	else
-		this->code = CodeType::IDENTIFIER;
-}
+Token::Token(std::variant<int, char, std::string> v, Attributes a): code(
+		std::holds_alternative<int>(v) ? Codes::INTEGER_NUMBER : (
+			std::holds_alternative<char>(v) ? CodeType::translateInput(get<char>(v)) : Codes::IDENTIFIER
+		)
+), value(std::move(v)), attribute(a) {}
 
 Token::operator std::string() const {
 	std::string str;
@@ -24,7 +19,8 @@ Token::operator std::string() const {
 	else
 		str = get<std::string>(this->value);
 
-	return "(" + printCodeType(this->code) + ", " + str + ")";
+	return "(" + std::string(this->code) + ", " + str
+			+ ", col:" + std::to_string(this->attribute.cols) + ", row:" + std::to_string(this->attribute.rows) + ")";
 }
 
 CodeType Token::getCode() const {

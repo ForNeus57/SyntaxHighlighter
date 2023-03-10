@@ -7,14 +7,15 @@
 
 #include <iostream>
 #include <variant>
+#include <string>
 
-#include "InputAlphabet.h"
+#include "CodeType.h"
 
 /**
- * @brief
+ * @brief	Simple struct, that contains all the attributes that we want to assign to Token;
  *
- * @param 	x
- * @param 	y
+ * @param 	cols - column number counting from 0 to n. Aka which character counting form left this object is referring.
+ * @param 	rows - row number counting from 0 to m. Aka which line number counting from top this object is referring.
  */
 struct Attributes {
 	std::size_t cols = 0, rows = 0;
@@ -23,11 +24,14 @@ struct Attributes {
 class Token {
 public:
 	/**
-	 * @brief
-	 * @param	v
-	 * @param	attributes
+	 * @brief	Constructor for this class...
+	 *
+	 * @todo	Make this peace of documentation more descriptive.
+	 *
+	 * @param	v	- From this parameter the Token code is deducted.
+	 * @param	a	- All other necessary data i.e. for error handling.
 	 */
-	Token(std::variant<int, char, std::string> v, Attributes attribute);
+	Token(std::variant<int, char, std::string> v, Attributes aa);
 public:
 	/**
 	 * @brief

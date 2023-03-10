@@ -3,14 +3,19 @@
 //
 #include <iostream>
 #include <fstream>
+#include <thread>
 
 #include "Scanner.h"
 #include "Token.h"
 
 int main(int argc, char *argv[]) {
+	Token ta =Token("asdasdad", {0,0});
+	std::cout << std::string(ta.getCode()) << ", " << get<std::string>(ta.getValue());
+	exit(EXIT_FAILURE);
+
 	if(argc < 2) {
 		std::cout << "Not enough arguments given! Please provide a path to a file that you want to scan.";
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	std::string line;
@@ -26,5 +31,5 @@ int main(int argc, char *argv[]) {
 
 	input_file.close();
 
-	return 0;
+	return EXIT_SUCCESS;
 }

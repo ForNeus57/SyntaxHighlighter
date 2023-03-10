@@ -10,11 +10,11 @@ set(MAIN
 
 set(SRC
         sources/scanner/token/Token.cpp
-        sources/scanner/Automata.cpp
+        sources/scanner/automata/Automata.cpp
         sources/scanner/Scanner.cpp
-        sources/scanner/exceptions/InvalidTokenConstructor.cpp
-        sources/scanner/token/InputAlphabet.cpp
-        )
+        sources/scanner/exceptions/WrongInputAlphabet.cpp
+        sources/scanner/token/CodeType.cpp
+        sources/scanner/exceptions/ErrorStateReached.cpp sources/scanner/exceptions/ErrorStateReached.h sources/scanner/automata/State.cpp sources/scanner/automata/State.h)
 
 set(COMPILER_FLAGS
         -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20
@@ -22,6 +22,8 @@ set(COMPILER_FLAGS
 
 include_directories(sources/scanner)
 include_directories(sources/scanner/token)
+include_directories(sources/scanner/exceptions)
+include_directories(sources/scanner/automata)
 
 add_library(${PROJECT_NAME}-lib ${SRC})
 

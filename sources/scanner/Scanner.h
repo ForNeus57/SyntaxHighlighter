@@ -23,8 +23,6 @@ public:
 public:
 
 private:
-	Token translateStateToToken(State s);
-private:
 	std::size_t index;
 	std::string input;
 	Automata A;

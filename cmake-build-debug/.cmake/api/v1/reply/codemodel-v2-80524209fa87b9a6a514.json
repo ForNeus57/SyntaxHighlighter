@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.24"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Compilation_theory_and_compilers",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Compilation_theory_and_compilers::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Compilation_theory_and_compilers-Debug-db85bde216ee3308a884.json",
+					"name" : "Compilation_theory_and_compilers",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Compilation_theory_and_compilers-lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Compilation_theory_and_compilers-lib-Debug-e4009cca4fdab9f4a618.json",
+					"name" : "Compilation_theory_and_compilers-lib",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/domin/CLionProjects/Compilation-theory-and-compilers/cmake-build-debug",
+		"source" : "C:/Users/domin/CLionProjects/Compilation-theory-and-compilers"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
