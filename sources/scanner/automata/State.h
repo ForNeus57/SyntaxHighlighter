@@ -21,20 +21,30 @@ typedef std::variant<unsigned int, char, std::string> (*pi)(std::string);
  */
 class State {
 public:
+	State();
+	explicit State(bool);
 	/**
 	 * @brief
 	 *
 	 * @param	c
 	 * @param	fun
-	 * @param	s
-	 * @param	a
 	 */
-	State(Codes c, pi fun, bool s, bool a);
+	explicit State(Codes c, pi fun);
+	State(const State& source);
+	State(State&& source) noexcept;
+public:
+	State& operator=(const State& rhs) noexcept;
+	State& operator=(State&& rhs) noexcept;
+	bool operator==(const State &rhs) const;
+	bool operator!=(const State &rhs) const;
 public:
 	pi getProcessInputFunction() const;
 	Codes getReturnCode() const;
 	bool isStarting() const;
 	bool isAccepting() const;
+private:
+	void copy(const State & source);
+	void move(State && source);
 private:
 	std::variant<unsigned int, char, std::string> (*process_input)(std::string);
 	Codes return_code;

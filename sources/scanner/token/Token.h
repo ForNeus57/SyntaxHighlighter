@@ -8,6 +8,7 @@
 #include <iostream>
 #include <variant>
 #include <string>
+#include <vector>
 
 #include "WrongInputAlphabet.h"
 
@@ -15,6 +16,8 @@
  * @brief
  *
  * @todo	FIX THIS BLOCK COMMENT
+ * @todo	ADD ITERATOR TO THIS ENUM, SUCH THAT ++ returns next element.
+ *
  *
  * @param	PLUS					- Equivalent to '+' character, code: 0
  * @param	MINUS					- Equivalent to '-' character, code: 1
@@ -24,6 +27,7 @@
  * @param	RIGHT_BRACKET			- Equivalent to ')' character, code: 5
  * @param	UNSIGNED_INTEGER_NUMBER	- Equivalent to any integer number
  * @param	IDENTIFIER				-
+ * @param	UNKNOWN
  */
 enum class Codes {
 	LEFT_BRACKET,
@@ -33,26 +37,25 @@ enum class Codes {
 	MINUS,
 	DIVIDED,
 	UNSIGNED_INTEGER_NUMBER,
-	IDENTIFIER
+	IDENTIFIER,
+	UNKNOWN
 };
 
+using Attributes = std::pair<std::size_t, std::size_t>;
 
 /**
- * @brief	Simple struct, that contains all the attributes that we want to assign to Token;
- *
- * @param 	cols - column number counting from 0 to n. Aka which character counting form left this object is referring.
- * @param 	rows - row number counting from 0 to m. Aka which line number counting from top this object is referring.
+ * @brief
+ * @param	code
+ * @param 	value
+ * @param	attribute
  */
-struct Attributes {
-	std::size_t cols = 0, rows = 0;
-};
-
 class Token {
 public:
 	/**
 	 * @brief	Constructor for this class...
 	 *
 	 * @todo	Make this peace of documentation more descriptive.
+	 * @todo	Make such if we try to create a token with wrong code (Codes::UNKNOWN), the error is thrown.
 	 *
 	 * @param	v	- From this parameter the Token code is deducted.
 	 * @param	a	- All other necessary data i.e. for error handling.
@@ -77,23 +80,27 @@ public:
 	Codes getCode() const;
 	std::variant<unsigned int, char, std::string> getValue() const;
 	Attributes getAttribute() const;
-public:
-
 private:
 	std::string printCodes() const;
 public:
 	const static std::string INPUT_ALPHABET;
-	const static std::size_t CODE_SIZE = 8;
+	const static std::vector<Codes> CODES_TYPES;
 private:
 	Codes code;
 	std::variant<unsigned int, char, std::string> value;
+	/**
+	 * @brief	Simple struct, that contains all the attributes that we want to assign to Token;
+	 *
+	 * @param 	line	- First parameter. Line number counting from 1 to m. Aka which line number counting from top this object is referring.
+	 * @param 	col		- Second parameter. Column number counting from 1 to n. Aka which character counting form left this object is referring.
+	 */
 	Attributes attribute;
 };
 
 /**
  * @brief
  *
- * @todo	Make such if string values aren't 0987654321 the exception is thrown.
+ * @todo	Make such if string values aren't one of 0987654321, the exception is thrown.
  *
  * @param	in
  * @return

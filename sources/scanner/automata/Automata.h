@@ -8,7 +8,7 @@
 #include <array>			//	std::array<...>
 #include <cstddef>			// 	std::size_t
 #include <vector>
-#include <list>
+#include <map>
 
 #include "Token.h"
 #include "State.h"
@@ -24,21 +24,31 @@ public:
 	Automata();
 public:
 	void changeState(char in);
+	/**
+	 * @brief
+	 *
+	 * @todo	Make this method safe from generating token out of nothing...
+	 * @return
+	 */
+	Token generateTokenOutOfCurrentState(Attributes);
+	bool synchroniseIndex();
 	void reset();
 public:
 
 public:
-	Token getToken();
-	bool isInAcceptingState();
+	bool isInAcceptingState() const;
 private:
 	void initializeStateTable();
+	void initializeInputAlphabetMap(std::string);
+	void initializeTransitionFunction();
 public:
 	const static std::size_t STARTING_STATE_NUMBER = 0;
 private:
 	std::size_t current_state_number;
-	std::size_t previous_state_number;
 	std::vector<State> state_table;
-	std::list<char> input_since_last_reset;
+	std::map<char, std::size_t> input_map;
+	std::vector<std::vector<std::size_t>> transition_function;
+	std::string input_since_last_reset;
 };
 
 

@@ -4,16 +4,18 @@
 
 #include "Scanner.h"
 
-Scanner::Scanner(std::string in): index(0), input(std::move(in)) {
-	this->A = {{}};
-}
+Scanner::Scanner(std::size_t l, std::string in): input(std::move(in)), index(0), line(l),  A(Automata()) {}
 
 Token Scanner::getToken() {
 	for(; !A.isInAcceptingState(); index++)
 		A.changeState(input[index]);
 
-	return A.generateTokenOutOfCurrentState();
+	//	index + 1, because it is counted from 0, but line is initialized with 1, so we don't have too.
+	Token t = A.generateTokenOutOfCurrentState({line, index + 1});
+	if(A.synchroniseIndex()) index--;
+	A.reset();
+	return t;
 }
 bool Scanner::isEmpty() {
-	return this->index == this->input.size() - 1;
+	return this->index >= this->input.size();
 }

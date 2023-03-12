@@ -13,10 +13,10 @@ set(SRC
         sources/scanner/automata/Automata.cpp
         sources/scanner/Scanner.cpp
         sources/scanner/exceptions/WrongInputAlphabet.cpp
-        sources/scanner/automata/State.cpp sources/scanner/automata/State.h)
+        sources/scanner/automata/State.cpp)
 
 set(COMPILER_FLAGS
-        -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20
+        -Wall -Wextra -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20
         )
 
 include_directories(sources/scanner)

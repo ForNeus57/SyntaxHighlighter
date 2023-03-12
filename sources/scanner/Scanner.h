@@ -17,14 +17,15 @@
  */
 class Scanner {
 public:
-	explicit Scanner(std::string in);
+	explicit Scanner(size_t, std::string);
 	Token getToken();
 	bool isEmpty();
 public:
 
 private:
-	std::size_t index;
 	std::string input;
+	std::size_t index;
+	std::size_t line;
 	Automata A;
 };
 
