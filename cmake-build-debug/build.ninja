@@ -77,20 +77,6 @@ build CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/except
   OBJECT_DIR = CMakeFiles\Compilation_theory_and_compilers-lib.dir
   OBJECT_FILE_DIR = CMakeFiles\Compilation_theory_and_compilers-lib.dir\sources\scanner\exceptions
 
-build CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/token/CodeType.cpp.obj: CXX_COMPILER__Compilation_theory_and_compilers-lib_Debug C$:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/token/CodeType.cpp || cmake_object_order_depends_target_Compilation_theory_and_compilers-lib
-  DEP_FILE = CMakeFiles\Compilation_theory_and_compilers-lib.dir\sources\scanner\token\CodeType.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20 -std=gnu++20
-  INCLUDES = -IC:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner -IC:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/token -IC:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/exceptions -IC:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/automata
-  OBJECT_DIR = CMakeFiles\Compilation_theory_and_compilers-lib.dir
-  OBJECT_FILE_DIR = CMakeFiles\Compilation_theory_and_compilers-lib.dir\sources\scanner\token
-
-build CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/exceptions/ErrorStateReached.cpp.obj: CXX_COMPILER__Compilation_theory_and_compilers-lib_Debug C$:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/exceptions/ErrorStateReached.cpp || cmake_object_order_depends_target_Compilation_theory_and_compilers-lib
-  DEP_FILE = CMakeFiles\Compilation_theory_and_compilers-lib.dir\sources\scanner\exceptions\ErrorStateReached.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20 -std=gnu++20
-  INCLUDES = -IC:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner -IC:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/token -IC:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/exceptions -IC:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/automata
-  OBJECT_DIR = CMakeFiles\Compilation_theory_and_compilers-lib.dir
-  OBJECT_FILE_DIR = CMakeFiles\Compilation_theory_and_compilers-lib.dir\sources\scanner\exceptions
-
 build CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/automata/State.cpp.obj: CXX_COMPILER__Compilation_theory_and_compilers-lib_Debug C$:/Users/domin/CLionProjects/Compilation-theory-and-compilers/sources/scanner/automata/State.cpp || cmake_object_order_depends_target_Compilation_theory_and_compilers-lib
   DEP_FILE = CMakeFiles\Compilation_theory_and_compilers-lib.dir\sources\scanner\automata\State.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20 -std=gnu++20
@@ -106,7 +92,7 @@ build CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/automa
 #############################################
 # Link the static library libCompilation_theory_and_compilers-lib.a
 
-build libCompilation_theory_and_compilers-lib.a: CXX_STATIC_LIBRARY_LINKER__Compilation_theory_and_compilers-lib_Debug CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/token/Token.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/automata/Automata.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/Scanner.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/exceptions/WrongInputAlphabet.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/token/CodeType.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/exceptions/ErrorStateReached.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/automata/State.cpp.obj
+build libCompilation_theory_and_compilers-lib.a: CXX_STATIC_LIBRARY_LINKER__Compilation_theory_and_compilers-lib_Debug CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/token/Token.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/automata/Automata.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/Scanner.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/exceptions/WrongInputAlphabet.cpp.obj CMakeFiles/Compilation_theory_and_compilers-lib.dir/sources/scanner/automata/State.cpp.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles\Compilation_theory_and_compilers-lib.dir
   POST_BUILD = cd .

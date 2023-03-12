@@ -13,8 +13,7 @@ set(SRC
         sources/scanner/automata/Automata.cpp
         sources/scanner/Scanner.cpp
         sources/scanner/exceptions/WrongInputAlphabet.cpp
-        sources/scanner/token/CodeType.cpp
-        sources/scanner/exceptions/ErrorStateReached.cpp sources/scanner/exceptions/ErrorStateReached.h sources/scanner/automata/State.cpp sources/scanner/automata/State.h)
+        sources/scanner/automata/State.cpp sources/scanner/automata/State.h)
 
 set(COMPILER_FLAGS
         -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20

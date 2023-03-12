@@ -4,22 +4,20 @@
 
 #include "State.h"
 
-State::State() {
-	this->id = count;
-	this->is_accepting = false;
-	State::count++;
+State::State(Codes c, pi fun, bool s, bool a): process_input(fun), return_code(c), is_starting(s), is_accepting(a) {}
+
+pi State::getProcessInputFunction() const {
+	return this->process_input;
 }
 
-State::State(bool a) {
-	this->id = count;
-	this->is_accepting = a;
-	State::count++;
+Codes State::getReturnCode() const {
+	return this->return_code;
 }
 
-std::size_t State::getId() {
-	return this->id;
+bool State::isStarting() const {
+	return this->is_starting;
 }
 
-bool State::isAccepting() {
+bool State::isAccepting() const {
 	return this->is_accepting;
 }

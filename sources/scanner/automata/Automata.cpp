@@ -5,7 +5,7 @@
 #include "Automata.h"
 
 Automata::Automata() {
-	//this->current_state_number = Automata::STARTING_STATE_NUMBER;
+	this->initializeStateTable();
 }
 
 Token Automata::generateTokenOutOfCurrentState() {
@@ -15,4 +15,17 @@ Token Automata::generateTokenOutOfCurrentState() {
 
 	this->reset();
 	return Token('+', {0,0});
+}
+
+void Automata::initializeStateTable() {
+	this->state_table = {
+			{true, false},
+			{false, false},
+			{false, false},
+			{false, false},
+			{false, false},
+			{false, false},
+			{false, false},
+			{false, false},
+	}
 }

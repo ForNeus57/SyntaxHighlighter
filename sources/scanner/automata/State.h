@@ -7,31 +7,39 @@
 
 #include <iostream>
 
+#include "Token.h"
+
+typedef std::variant<unsigned int, char, std::string> (*pi)(std::string);
+
 /**
  * @brief
  *
- * @param	count
- * @param	id
- * @param	is_accepting
+ * @param	count				-
+ * @param	id					-
+ * @param	generated_token_id	-
+ * @param	is_accepting		-
  */
 class State {
 public:
-	State();
-	explicit State(bool);
+	/**
+	 * @brief
+	 *
+	 * @param	c
+	 * @param	fun
+	 * @param	s
+	 * @param	a
+	 */
+	State(Codes c, pi fun, bool s, bool a);
 public:
-	std::size_t getId();
-	bool isAccepting();
+	pi getProcessInputFunction() const;
+	Codes getReturnCode() const;
+	bool isStarting() const;
+	bool isAccepting() const;
 private:
-	static std::size_t count;
-	std::size_t id;
+	std::variant<unsigned int, char, std::string> (*process_input)(std::string);
+	Codes return_code;
+	bool is_starting;
 	bool is_accepting;
-};
-
-class StateTable {
-public:
-
-public:
-	const static std::size_t TOTAL_NUMBER_OF_STATES = 256;
 };
 
 

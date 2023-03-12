@@ -4,7 +4,9 @@
 
 #include "Scanner.h"
 
-Scanner::Scanner(std::string in): index(0), input(std::move(in)), A(Automata()) {}
+Scanner::Scanner(std::string in): index(0), input(std::move(in)) {
+	this->A = {{}};
+}
 
 Token Scanner::getToken() {
 	for(; !A.isInAcceptingState(); index++)
