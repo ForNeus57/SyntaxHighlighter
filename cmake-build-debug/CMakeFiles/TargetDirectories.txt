@@ -1,4 +1,0 @@
-C:/Users/domin/CLionProjects/Compilation-theory-and-compilers/cmake-build-debug/CMakeFiles/Compilation_theory_and_compilers-lib.dir
-C:/Users/domin/CLionProjects/Compilation-theory-and-compilers/cmake-build-debug/CMakeFiles/Compilation_theory_and_compilers.dir
-C:/Users/domin/CLionProjects/Compilation-theory-and-compilers/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/domin/CLionProjects/Compilation-theory-and-compilers/cmake-build-debug/CMakeFiles/rebuild_cache.dir
