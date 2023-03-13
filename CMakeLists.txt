@@ -9,11 +9,11 @@ set(MAIN
         )
 
 set(SRC
-        sources/scanner/token/Token.cpp
-        sources/scanner/automata/Automata.cpp
-        sources/scanner/Scanner.cpp
-        sources/scanner/exceptions/WrongInputAlphabet.cpp
-        sources/scanner/automata/State.cpp)
+        sources/scanner/token/token.cpp
+        sources/scanner/automata/automata.cpp
+        sources/scanner/scanner.cpp
+        sources/scanner/automata/state.cpp
+        sources/scanner/exceptions/unable_to_create_unknown_code_token.h)
 
 set(COMPILER_FLAGS
         -Wall -Wextra -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20

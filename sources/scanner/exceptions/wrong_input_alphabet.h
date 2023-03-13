@@ -11,7 +11,7 @@
 class WrongInputAlphabet: public std::exception {
 public:
 	explicit WrongInputAlphabet(const std::string & msg = "Not given.") {
-		this->message += msg;
+		this->message += msg + '\n';
 	}
 public:
 	const char* what () const noexcept override {

@@ -10,8 +10,8 @@
 #include <vector>
 #include <map>
 
-#include "Token.h"
-#include "State.h"
+#include "token.h"
+#include "state.h"
 
 /**
  * @brief

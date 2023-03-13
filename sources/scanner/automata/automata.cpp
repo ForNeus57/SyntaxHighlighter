@@ -2,7 +2,7 @@
 // Created by Dominik on 08.03.2023.
 //
 
-#include "Automata.h"
+#include "automata.h"
 
 Automata::Automata(): current_state_number(Automata::STARTING_STATE_NUMBER) {
 	this->initializeStateTable();
@@ -12,12 +12,12 @@ Automata::Automata(): current_state_number(Automata::STARTING_STATE_NUMBER) {
 
 void Automata::changeState(char in) {
 	this->current_state_number = this->transition_function[this->current_state_number][this->input_map[in]];
-	if(in != ' ' && in != '\n') this->input_since_last_reset.push_back(in);
+	this->input_since_last_reset.push_back(in);
 }
 
 Token Automata::generateTokenOutOfCurrentState(Attributes a) {
 	return {this->state_table[this->current_state_number].getReturnCode(),
-			this->state_table[this->current_state_number].getProcessInputFunction()(this->input_since_last_reset),
+			this->input_since_last_reset,
 			{a.first, a.second - this->input_since_last_reset.size()}
 	};
 }
@@ -31,6 +31,7 @@ bool Automata::synchroniseIndex() {
 		case Codes::UNKNOWN: case Codes::LEFT_BRACKET: case Codes::RIGHT_BRACKET: case Codes::TIMES: case Codes::PLUS: case Codes::MINUS: case Codes::DIVIDED:
 			return false;
 	}
+	return false;
 }
 
 void Automata::reset() {
@@ -48,10 +49,8 @@ void Automata::initializeStateTable() {
 	this->state_table.emplace_back(true);
 	//	Finishing state
 	for(Codes x : Token::CODES_TYPES) {
-		if(x == Codes::UNSIGNED_INTEGER_NUMBER) this->state_table.emplace_back(x, pars_unsigned_integer);
-		else if(x == Codes::IDENTIFIER) this->state_table.emplace_back(x, pars_identifier);
-		else if(x == Codes::UNKNOWN) continue;
-		else this->state_table.emplace_back(x, pars_single_value_tokens);
+		if(x == Codes::UNKNOWN) continue;
+		else this->state_table.emplace_back(x);
 	}
 	for(size_t i = 0; i < 2; ++i)
 		this->state_table.emplace_back(false);

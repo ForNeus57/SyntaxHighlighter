@@ -1,12 +1,8 @@
-//
-// Created by Dominik on 08.03.2023.
-//
 #include <iostream>
 #include <fstream>
-#include <thread>
 
-#include "Scanner.h"
-#include "Token.h"
+#include "scanner.h"
+#include "token.h"
 
 int main(int argc, char *argv[]) {
 	if(argc < 2) {
@@ -15,16 +11,15 @@ int main(int argc, char *argv[]) {
 	}
 	for(int i = 1; i < argc; ++i) {
 		std::cout << "FILE: " << argv[i] << i << '\n' << '\n';
-		std::size_t line_number = 1;
 		std::string line;
 		std::ifstream input_file(argv[i]);
+		Scanner s = Scanner();
 		while(std::getline(input_file, line)) {
-			Scanner s = Scanner(line_number, line);
+			s.addNextLine(line);
 			while(!s.isEmpty()) {
 				Token t = s.getToken();
 				std::cout << t << '\n';				//	std::cout << s.getToken() << '\n';
 			}
-			line_number++;
 		}
 		input_file.close();
 	}

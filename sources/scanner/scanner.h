@@ -5,8 +5,8 @@
 #ifndef COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
 #define COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
 
-#include "Token.h"
-#include "Automata.h"
+#include "token.h"
+#include "automata.h"
 
 /**
  * @brief
@@ -17,15 +17,21 @@
  */
 class Scanner {
 public:
-	explicit Scanner(size_t, std::string);
-	Token getToken();
-	bool isEmpty();
+	Scanner();
+	explicit Scanner(std::string);
 public:
+	void addNextLine(const std::string&);
+	Token getToken();
+public:
+	bool isEmpty();
+private:
 
+public:
+	const static std::size_t RESET_INDEX = 0;
 private:
 	std::string input;
-	std::size_t index;
-	std::size_t line;
+	std::size_t col_index;
+	std::size_t line_index;
 	Automata A;
 };
 
