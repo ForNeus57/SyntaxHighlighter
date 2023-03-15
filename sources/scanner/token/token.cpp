@@ -55,7 +55,7 @@ Token::Token(Codes c, std::string in, Attributes a): code(c), value(), attribute
 			break;
 		}
 		case Codes::UNKNOWN: {
-			throw WrongInputAlphabet();
+			throw WrongInputAlphabet("");
 		}
 	}
 }
@@ -98,7 +98,7 @@ Token::operator std::string() const {
 			val = "\"" + std::get<std::string>(this->value) + "\"";
 			break;
 		case Codes::UNKNOWN:
-			throw WrongInputAlphabet();
+			throw WrongInputAlphabet("");
 	}
 	return "(code:" + cod + ", value:" + val + ", line:" + std::to_string(line) + ", col:" + std::to_string(col) + ")";
 }

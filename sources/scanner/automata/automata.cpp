@@ -1,6 +1,11 @@
-//
-// Created by Dominik on 08.03.2023.
-//
+/**
+ * @file 	automata.cpp
+ * @version 0.027
+ * @author 	Dominik Breksa, dominikbreksa@gmail.com
+ * @date 	08.03.2023
+ * @brief	Source file relating to Automata class.
+ * @see		automata.h file.
+**/
 
 #include "automata.h"
 
@@ -11,11 +16,15 @@ Automata::Automata(const std::vector<std::vector<char>>& a): current_state_numbe
 }
 
 void Automata::changeState(char in) {
+	//	Make sure that we try to insert characters that are in provided in the alphabet.
+	if (this->input_map.find(in) == this->input_map.end()) throw WrongInputAlphabet(this->input_since_last_reset);
+
 	this->current_state_number = this->transition_function[this->current_state_number][this->input_map[in]];
 	this->input_since_last_reset.push_back(in);
 }
 
 Token Automata::generateTokenOutOfCurrentState(Attributes a) {
+	//	Prevent creation of a token not from final state.
 	if(!this->isInAcceptingState()) throw CannotCreateTokenNotFromFinishingState();
 	return {this->state_table[this->current_state_number].getReturnCode(),
 			this->input_since_last_reset,

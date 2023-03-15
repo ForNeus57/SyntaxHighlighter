@@ -18,7 +18,7 @@ set(SRC
         )
 
 set(COMPILER_FLAGS
-        -Wall -Wextra -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20
+        -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20
         )
 
 add_subdirectory(includes)

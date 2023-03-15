@@ -4,7 +4,7 @@
  * @author 	Dominik Breksa, dominikbreksa@gmail.com
  * @date 	08.03.2023
  * @brief	Header file relating to Token class.
- * @see		token.cpp
+ * @see		token.cpp file.
 **/
 
 #ifndef COMPILATION_THEORY_AND_COMPILERS_TOKEN_H
@@ -36,8 +36,8 @@
  *
  * @param	UNKNOWN					- Error code, signaling the token was tried to be created not from finishing state in Automata, code: 8
  *
- * @see		Token class
- * @see		automata.h file
+ * @see		Token class.
+ * @see		automata.h file.
  */
 enum class Codes {
 	//	Single value tokens
@@ -67,8 +67,8 @@ enum class Codes {
  * @example	Token::INPUT_ALPHABET[Alphabet::LETTERS][i] will return i -th letter from this alphabet.
  *
  * @see		token.cpp file to better understand how this data is organised.
- * @see		Token class
- * @see		Token::INPUT_ALPHABET static attribute
+ * @see		Token class.
+ * @see		Token::INPUT_ALPHABET static attribute.
  */
 enum Alphabet {
 	LETTERS				= 0,
@@ -89,14 +89,16 @@ using Attributes = std::pair<std::size_t, std::size_t>;
  * @brief	Token class is meant to represent scanner token used for parsing code.
  * @note	It is an extension to a Codes enum, because their modularity is very limiting in C++, however it adds the ability to process token value and locate errors.
  *
- * @see		Codes enum
- * @see		Alphabet enum
- * @see		Automata class
+ * @todo	Consider merging State class and Token class into one class.
+ *
+ * @see		Codes enum.
+ * @see		Alphabet enum.
+ * @see		Automata class.
  */
 class Token {
 public:
 	/**
-	 * @brief	Constructor for this class.
+	 * @brief	Constructor for this class. That assigns the value of the token based on the provided code.
 	 *
 	 * @throws	WrongInputAlphabet if this object is tried to be created with codes == Codes::UNKNOWN
 	 *
@@ -104,8 +106,8 @@ public:
 	 * @param	s	- String that lead to creating a Token in Automata.
 	 * @param	a	- All other necessary data i.e. location for error handling.
 	 *
-	 * @see		Automata class
-	 * @see		Codes enum
+	 * @see		Automata class.
+	 * @see		Codes enum.
 	 */
 	Token(Codes c, std::string s, Attributes a);
 public:
@@ -118,11 +120,11 @@ public:
 	explicit operator std::string() const;
 	/**
 	 * @brief	Simple stream operator, to make it able to be printed into console.
-	 * @param	os		output stream
-	 * @param	other	some token
+	 * @param	os		- Output stream
+	 * @param	other	- Some token object.
 	 * @return	output stream back to the source.
 	 */
-	friend std::ostream& operator<<(std::ostream& os, const Token& other) {return os << std::string(other);}
+	friend std::ostream& operator<<(std::ostream& os, const Token& other) { return os << std::string(other); }
 public:
 	/**
 	 * @brief	Simple getter for code attribute.
@@ -145,7 +147,7 @@ public:
 	 * @brief	Static variable containing all the symbols in ascii table, that we consider in input alphabet of this scanner.
 	 * @note	This variable makes it very easy to add new characters to alphabet. Simply extend the vector.
 	 *
-	 * @see		Alphabet enum
+	 * @see		Alphabet enum.
 	 */
 	const static std::vector<std::vector<char>> INPUT_ALPHABET;
 	/**
@@ -156,14 +158,14 @@ public:
 	 * @todo	Make this variable an ordered set, to iterate easier and make sure, that their values are unique.
 	 * @todo	ADD ITERATOR TO THIS ENUM, SUCH THAT ++ returns next element. TEMPORARY FIX: vector<Codes> Token::CODES_TYPES not memory efficient
 	 *
-	 * @see		Codes
+	 * @see		Codes enum.
 	 */
 	const static std::vector<Codes> CODES_TYPES;
 private:
 	/**
 	 * @brief	Code attribute of token, basically informs us of the created token type. Is it a Plus symbol, minus...
 	 * @note	It also contains the information about how to understand coming in constructor string and making it proper value.
-	 * @see		Codes enum
+	 * @see		Codes enum.
 	 */
 	Codes code;
 	/**
@@ -173,13 +175,10 @@ private:
 	 */
 	std::variant<unsigned int, char, std::string> value;
 	/**
-	 * @brief	Simple tuple, that contains all the attributes that we want to assign to Token;
+	 * @brief	Simple tuple, that contains all the attributes that we want to assign to Token.
 	 *
 	 * @todo	Change the name of this variable to something different i.e. position idk.
-	 * @todo	Consider making it separate variables. Instead of packing them into a tuple.
-	 *
-	 * @param	line	- First parameter. Line number counting from 1 to m. Aka which line number counting from top this object is referring.
-	 * @param	col		- Second parameter. Column number counting from 1 to n. Aka which character counting form left this object is referring.
+	 * @todo	Consider making it separate variables. Instead of packing them into a tuple. Save memory. :D
 	 */
 	Attributes attribute;
 };

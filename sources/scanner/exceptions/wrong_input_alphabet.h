@@ -10,8 +10,8 @@
 
 class WrongInputAlphabet: public std::exception {
 public:
-	explicit WrongInputAlphabet(const std::string & msg = "Not given.") {
-		this->message += msg + '\n';
+	explicit WrongInputAlphabet(const std::string& in) {
+		this->message += "Error occurred while trying to scan next token: " + in + '\n';
 	}
 public:
 	const char* what () const noexcept override {

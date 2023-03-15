@@ -4,13 +4,13 @@
  * @author 	Dominik Breksa, dominikbreksa@gmail.com
  * @date 	08.03.2023
  * @brief	Header file relating to Automata class.
- * @see		automata.cpp
+ * @see		automata.cpp file.
 **/
 
 #ifndef COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
 #define COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
 
-#include <array>			//	std::array<...>
+
 #include <cstddef>			// 	std::size_t
 #include <vector>
 #include <map>
@@ -20,31 +20,35 @@
 #include "cannot_create_token_not_from_finishing_state.h"
 
 /**
- * @brief	Implementation of DFA (Deterministic Finite Automata), that is used by the scanner to construct next Tokens out of the input.
+ * @brief	Implementation of DFA (Deterministic Finite Automata), that is used by the scanner to construct next Tokens.
  * @note
  */
 class Automata {
 public:
 	/**
-	 * @brief
+	 * @brief	Constructor for Automata class.
+	 *
+	 * @param	input_alphabet	- Group of characters that are considered valid inputs to the transition function ot the DFA.
+	 *
+	 * @see		Token class.
+	 * @see		Token::INPUT_ALPHABET.
 	 */
-	explicit Automata(const std::vector<std::vector<char>>&);
+	explicit Automata(const std::vector<std::vector<char>>& alphabet);
 public:
 	/**
-	 * @brief	Moves the
-	 * @param	in
+	 * @brief	Moves the cursor (index in the State table) to the next state.
+	 * @param	in	- One of input parameters of transition_function.
 	 */
 	void changeState(char in);
 	/**
-	 * @brief
+	 * @brief	If current state is accepting it will return token created using instructions provided in a State.return_code.
 	 *
-	 * @todo	Make this method safe from generating token out of nothing...
-	 * @return
+	 * @return	Created token.
 	 */
 	Token generateTokenOutOfCurrentState(Attributes);
 	/**
-	 * @brief
-	 * @return
+	 * @brief	Extra information that
+	 * @return	True / false it there occurs a need to subtract 1 from index, to process specific letter once more.
 	 */
 	bool synchroniseIndex();
 	/*
@@ -53,13 +57,11 @@ public:
 	 */
 	void reset();
 public:
-
-public:
 	/**
 	 * @brief	Simple method tha informs outside environment if we have reached through input an accepting state.
 	 * @return 	True/False if current state have true/false of is_finishing attribute.
 	 *
-	 * @see	State class
+	 * @see	State class.
 	 */
 	bool isInAcceptingState() const;
 private:
@@ -75,8 +77,8 @@ private:
 	/**
 	 * @brief	The cursor, that points to the index in state_table which corresponds to a specific state.
 	 *
-	 * @see	State class
-	 * @see	state_table attribute in this class.
+	 * @see		State class.
+	 * @see		state_table attribute in this class.
 	 */
 	std::size_t current_state_number;
 	/**
@@ -84,7 +86,7 @@ private:
 	 * @note	Serves the same function, as a table of Tokens,
 	 * @note	In this Automata we are not moving through individual states, but rather to save time and memory through state indexes in this table.
 	 *
-	 * @see		State class
+	 * @see		State class.
 	 */
 	std::vector<State> state_table;
 	/**
@@ -99,12 +101,12 @@ private:
 	 */
 	std::vector<std::vector<std::size_t>> transition_function;
 	/**
-	 * @brief
+	 * @brief	The input that have lead this automata to accepting state.
 	 */
 	std::string input_since_last_reset;
 	/**
 	 * @brief	Exactly the same as Token::INPUT_ALPHABET.
-	 * @todo	Consider removing this variable and assigning it to the constructor and passing it to initialize... methods.
+	 * @todo	Consider removing this variable and assigning it to the constructor and passing it to initialize methods.
 	 *
 	 * @see		Token::INPUT_ALPHABET variable in Token class.
 	 */

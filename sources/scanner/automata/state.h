@@ -4,7 +4,7 @@
  * @author 	Dominik Breksa, dominikbreksa@gmail.com
  * @date 	10.03.2023
  * @brief	Header file relating to State class.
- * @see		state.cpp
+ * @see		state.cpp file.
 **/
 
 #ifndef COMPILATION_THEORY_AND_COMPILERS_STATE_H
@@ -27,7 +27,7 @@ public:
 	/**
 	 * @brief
 	 *
-	 * @param	c
+	 * @param	c	-
 	 */
 	explicit State(Codes c);
 	/**
@@ -51,11 +51,11 @@ private:
 	void move(State && source);
 private:
 	/**
-	 * @brief
+	 * @brief	Instructions given to a Token constructor how to create token.
 	 */
 	Codes return_code;
 	/**
-	 * @brief
+	 * @brief	True / false if this state is accepting and have a meaning full value stored in a
 	 */
 	bool is_accepting;
 };
