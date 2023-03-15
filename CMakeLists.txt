@@ -13,7 +13,7 @@ set(SRC
         sources/scanner/automata/automata.cpp
         sources/scanner/scanner.cpp
         sources/scanner/automata/state.cpp
-        sources/scanner/exceptions/unable_to_create_unknown_code_token.h)
+        sources/scanner/exceptions/error_state_reached.h sources/scanner/exceptions/cannot_create_token_not_from_finishing_state.h)
 
 set(COMPILER_FLAGS
         -Wall -Wextra -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20

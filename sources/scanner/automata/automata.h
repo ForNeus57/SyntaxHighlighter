@@ -1,6 +1,11 @@
-//
-// Created by Dominik on 08.03.2023.
-//
+/**
+ * @file 	automata.h
+ * @version 0.027
+ * @author 	Dominik Breksa, dominikbreksa@gmail.com
+ * @date 	08.03.2023
+ * @brief	Header file relating to Automata class.
+ * @see		automata.cpp
+**/
 
 #ifndef COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
 #define COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
@@ -12,17 +17,23 @@
 
 #include "token.h"
 #include "state.h"
+#include "cannot_create_token_not_from_finishing_state.h"
 
 /**
- * @brief
- *
- * @param	current_state_number	-
- * @param	token_table				-
+ * @brief	Implementation of DFA (Deterministic Finite Automata), that is used by the scanner to construct next Tokens out of the input.
+ * @note
  */
 class Automata {
 public:
-	Automata();
+	/**
+	 * @brief
+	 */
+	explicit Automata(const std::vector<std::vector<char>>&);
 public:
+	/**
+	 * @brief	Moves the
+	 * @param	in
+	 */
 	void changeState(char in);
 	/**
 	 * @brief
@@ -31,25 +42,74 @@ public:
 	 * @return
 	 */
 	Token generateTokenOutOfCurrentState(Attributes);
+	/**
+	 * @brief
+	 * @return
+	 */
 	bool synchroniseIndex();
+	/*
+	 * @brief	Resets the current state number and clears the input_since_last_reset string.
+	 * @note	It prepares these automata to generate new token.
+	 */
 	void reset();
 public:
 
 public:
+	/**
+	 * @brief	Simple method tha informs outside environment if we have reached through input an accepting state.
+	 * @return 	True/False if current state have true/false of is_finishing attribute.
+	 *
+	 * @see	State class
+	 */
 	bool isInAcceptingState() const;
 private:
 	void initializeStateTable();
-	void initializeInputAlphabetMap(std::string);
+	void initializeInputAlphabetMap();
 	void initializeTransitionFunction();
 public:
+	/**
+	 * @brief	The state index, that will be assigned as a starting one.
+	 */
 	const static std::size_t STARTING_STATE_NUMBER = 0;
 private:
+	/**
+	 * @brief	The cursor, that points to the index in state_table which corresponds to a specific state.
+	 *
+	 * @see	State class
+	 * @see	state_table attribute in this class.
+	 */
 	std::size_t current_state_number;
+	/**
+	 * @brief	The table of all the states that are in a Automata.
+	 * @note	Serves the same function, as a table of Tokens,
+	 * @note	In this Automata we are not moving through individual states, but rather to save time and memory through state indexes in this table.
+	 *
+	 * @see		State class
+	 */
 	std::vector<State> state_table;
+	/**
+	 * @brief	Variable that maps any character in a input alphabet to a specific index in transition table.
+	 * @note	It is a function: char -> column index in transition function.
+	 */
 	std::map<char, std::size_t> input_map;
+	/**
+	 * @brief	2D vector that contains the how to behave if we are in current state and have specific input character.
+	 * @note	It is a function: (char, curr_state_index) -> next_state_index in state table.
+	 * @note	This table is nothing more fancy then a table style provided to us on Formal linguistics and automata course last semester.
+	 */
 	std::vector<std::vector<std::size_t>> transition_function;
+	/**
+	 * @brief
+	 */
 	std::string input_since_last_reset;
+	/**
+	 * @brief	Exactly the same as Token::INPUT_ALPHABET.
+	 * @todo	Consider removing this variable and assigning it to the constructor and passing it to initialize... methods.
+	 *
+	 * @see		Token::INPUT_ALPHABET variable in Token class.
+	 */
+	const std::vector<std::vector<char>> alphabet;
 };
 
 
-#endif //COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
+#endif	//	COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
