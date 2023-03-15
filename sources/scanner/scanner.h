@@ -11,9 +11,6 @@
 /**
  * @brief
  *
- * @param	index
- * @param	input
- * @param	A
  */
 class Scanner {
 public:
@@ -29,11 +26,23 @@ private:
 public:
 	const static std::size_t RESET_INDEX = 0;
 private:
+	/**
+	 * @brief
+	 */
 	std::string input;
+	/**
+	 * @brief
+	 */
 	std::size_t col_index;
+	/**
+	 * @brief
+	 */
 	std::size_t line_index;
+	/**
+	 * @brief
+	 */
 	Automata A;
 };
 
 
-#endif //COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
+#endif	//	COMPILATION_THEORY_AND_COMPILERS_SCANNER_H

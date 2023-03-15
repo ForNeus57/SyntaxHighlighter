@@ -1,6 +1,11 @@
-//
-// Created by Dominik on 10.03.2023.
-//
+/**
+ * @file 	state.h
+ * @version 0.027
+ * @author 	Dominik Breksa, dominikbreksa@gmail.com
+ * @date 	10.03.2023
+ * @brief	Header file relating to State class.
+ * @see		state.cpp
+**/
 
 #ifndef COMPILATION_THEORY_AND_COMPILERS_STATE_H
 #define COMPILATION_THEORY_AND_COMPILERS_STATE_H
@@ -11,40 +16,47 @@
 
 /**
  * @brief
- *
- * @param	count				-
- * @param	id					-
- * @param	generated_token_id	-
- * @param	is_accepting		-
+ * @see		Automata class
  */
 class State {
 public:
+	/**
+	 * @brief	Default constructor making a state that returns Codes::UNKNOWN and isn't final.
+	 */
 	State();
-	explicit State(bool);
 	/**
 	 * @brief
 	 *
 	 * @param	c
-	 * @param	fun
 	 */
 	explicit State(Codes c);
+	/**
+	 * @brief
+	 * @param source
+	 */
 	State(const State& source);
+	/**
+	 * @brief
+	 * @param source
+	 */
 	State(State&& source) noexcept;
 public:
 	State& operator=(const State& rhs) noexcept;
 	State& operator=(State&& rhs) noexcept;
-	bool operator==(const State &rhs) const;
-	bool operator!=(const State &rhs) const;
 public:
 	Codes getReturnCode() const;
-	bool isStarting() const;
 	bool isAccepting() const;
 private:
 	void copy(const State & source);
 	void move(State && source);
 private:
+	/**
+	 * @brief
+	 */
 	Codes return_code;
-	bool is_starting;
+	/**
+	 * @brief
+	 */
 	bool is_accepting;
 };
 
