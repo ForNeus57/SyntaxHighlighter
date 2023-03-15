@@ -18,6 +18,7 @@
  * @todo	Make the ability to take data for scanner and others from standard input like console.
  * @todo	Make the ability to save the output to a file
  * @todo	Add statistics how many correct tokens have been found in a provided file or console input.
+ * @todo	Implement scanner class as an different thread separated from for example parsing, so that the parsing isn't stopped for producing next token.
  *
  * @param	argc	How many argument ware given (starting from 1, because 0 is the .exe file name).
  * @param	argv	Vector of strings containing commandline arguments.

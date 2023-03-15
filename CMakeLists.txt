@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(Compilation_theory_and_compilers)
+project(BasicCompiler)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -13,12 +13,17 @@ set(SRC
         sources/scanner/automata/automata.cpp
         sources/scanner/scanner.cpp
         sources/scanner/automata/state.cpp
-        sources/scanner/exceptions/error_state_reached.h sources/scanner/exceptions/cannot_create_token_not_from_finishing_state.h)
+        sources/scanner/exceptions/error_state_reached.h
+        sources/scanner/exceptions/cannot_create_token_not_from_finishing_state.h
+        )
 
 set(COMPILER_FLAGS
         -Wall -Wextra -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20
         )
 
+add_subdirectory(includes)
+
+include_directories(includes/)
 include_directories(sources/scanner)
 include_directories(sources/scanner/token)
 include_directories(sources/scanner/exceptions)
