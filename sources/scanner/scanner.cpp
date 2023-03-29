@@ -12,6 +12,13 @@
 Scanner::Scanner(): col_index(Scanner::RESET_INDEX), line_index(Scanner::RESET_INDEX),  A(Automata(Token::INPUT_ALPHABET)) {}
 Scanner::Scanner(std::string in): input(std::move(in)), col_index(Scanner::RESET_INDEX), line_index(Scanner::RESET_INDEX + 1),  A(Automata(Token::INPUT_ALPHABET)) {}
 
+std::optional<Statistics> Scanner::operator()(std::ifstream in, std::ofstream out, bool calculate_statistics) {
+	return {};
+}
+std::optional<Statistics> Scanner::operator()(bool) {
+	return {};
+}
+
 void Scanner::addNextLine(const std::string& in) {
 	this->input = in;
 	this->col_index = Scanner::RESET_INDEX;

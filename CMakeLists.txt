@@ -28,6 +28,7 @@ include_directories(sources/scanner)
 include_directories(sources/scanner/token)
 include_directories(sources/scanner/exceptions)
 include_directories(sources/scanner/automata)
+include_directories(sources/)
 
 add_library(${PROJECT_NAME}-lib ${SRC})
 

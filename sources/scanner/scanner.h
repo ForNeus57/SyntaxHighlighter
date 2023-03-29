@@ -10,8 +10,15 @@
 #ifndef COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
 #define COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
 
+#include <optional>
+#include <fstream>
+
 #include "token.h"
 #include "automata.h"
+
+
+using Statistics = std::tuple<std::size_t, std::size_t, std::size_t, std::array<std::size_t, CODES_SIZE>, std::size_t, std::size_t>;
+
 
 /**
  * @brief	Scanner class is able to manage addition of new lines to DFA and changing its states in Automata object.
@@ -29,6 +36,9 @@ public:
 	 * @param	in	- The line that will be processed.
 	 */
 	explicit Scanner(std::string in);
+public:
+	std::optional<Statistics> operator()(std::ifstream, std::ofstream, bool);
+	std::optional<Statistics> operator()(bool);
 public:
 	/**
 	 * @brief	Changes the input attribute to

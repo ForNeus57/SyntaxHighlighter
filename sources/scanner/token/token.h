@@ -17,6 +17,8 @@
 
 #include "wrong_input_alphabet.h"
 
+#define CODES_SIZE 9
+
 /**
  * @brief	Simple enum that is used to store code for the token.
  *
@@ -142,6 +144,11 @@ public:
 	 * @return 	One of the following: uint, char or std::string elements.
 	 */
 	Attributes getAttribute() const;
+	/**
+	 * @brief
+	 * @return
+	 */
+	std::string convertToHTML() const;
 public:
 	/**
 	 * @brief	Static variable containing all the symbols in ascii table, that we consider in input alphabet of this scanner.

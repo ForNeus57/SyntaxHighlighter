@@ -11,6 +11,9 @@
 
 #include "scanner.h"
 #include "token.h"
+#include "config.h"
+
+#define PROGRAM_VERSION 0.027
 
 /**
  * @brief	Main function, that starts the program; expects the input to be in files to which location was provided in program arguments.
@@ -25,6 +28,26 @@
  * @return	0 - all went fine; 1 - not enough arguments were provided.
  */
 int main(int argc, char *argv[]) {
+	Config c{};
+	try {
+		c.parse(argc, argv);
+	} catch (const std::exception &exc) {
+		std::cerr << exc.what() << '\n';
+		std::cerr << "usage: BasicCompiler.exe [-i|--input] <input_files> [-o|--output] <output_files> [-s|--statistics] [-H|--HTML] [-t|--threads] <integer_count> [-h|--help] [-v|--version]\n";
+		exit(EXIT_FAILURE);
+	}
+	const auto& [files, statistics, html, threads, help, version] = c;
+
+	if(version)
+		std::cout << "BasicCompiler.exe version: " + std::to_string(PROGRAM_VERSION) + '\n';
+
+	//	@todo Make this help be more useful...
+	if(help)
+		std::cout << "usage: BasicCompiler.exe [-i|--input] <input_files> [-o|--output] <output_files> [-s|--statistics] [-H|--HTML] [-t|--threads] <integer_count> [-h|--help] [-v|--version]\n";
+
+
+
+
 	if(argc < 2) {										//	Make sure, that there are arguments passed when executing this program.
 		std::cout << "Not enough commandline arguments given! Please provide a path to a file that you want to scan.";
 		exit(EXIT_FAILURE);
@@ -37,8 +60,13 @@ int main(int argc, char *argv[]) {
 		while(std::getline(input_file, line)) {	//	Go through all the lines of a given file.
 			s.addNextLine(line);
 			while(!s.isEmpty()) {						//	Generate all the tokens in this line.
-				Token t = s.getToken();					//	I use a method call instead of a function, but I think, that it isn't much of a problem.
-				std::cout << t << '\n';					//	Could be swapped to: std::cout << s.getToken() << '\n';
+				try {
+					Token t = s.getToken();					//	I use a method call instead of a function, but I think, that it isn't much of a problem.
+					std::cout << t << '\n';					//	Could be swapped to: std::cout << s.getToken() << '\n';
+				} catch(const WrongInputAlphabet& err){
+					std::cout << err.what();
+					break;
+				}
 			}
 		}
 		input_file.close();								//	Close the file after the use.
