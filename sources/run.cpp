@@ -24,6 +24,11 @@ Run::Run(int argc, char** argv): program_name(), input(), output(), output_forma
 	}
 }
 
+Run& Run::getInstance(int argc, char** argv) {
+	static Run singleton_object(argc, argv);
+	return singleton_object;
+}
+
 void Run::parse(int argc, char** argv) {
 	const std::vector<std::string_view> args(argv, argv + argc);
 	this->program_name = args[0].data();

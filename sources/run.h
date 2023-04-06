@@ -16,7 +16,7 @@
 
 #include "token.h"
 #include "config.h"
-#include "file_wrapper.h"
+#include "common/file_wrapper.h"
 
 uint64_t constexpr mix(char m, uint64_t s) {
 	return ((s<<7) + ~(s>>3)) + static_cast<uint64_t>(~m);
@@ -27,15 +27,25 @@ uint64_t constexpr hash(const char * m) {
 
 /**
  * @brief
- * @todo	Make this help be more useful...
+ * @note	This class uses the OOP singleton design pattern.
+ *
+ * @todo	Make this help method be more useful...
+ * @todo	Make the .parse() method use use iterators instead of index.
  */
 class Run final {
-public:
+private:
 	/**
 	 * @brief
 	 *
 	 */
 	Run(int, char**);
+	~Run() = default;
+public:
+	Run(const Run&) = delete;
+public:
+	void operator=(const Run&) = delete;
+public:
+	static Run& getInstance(int, char**);
 public:
 	void start();
 private:
@@ -53,7 +63,7 @@ private:
 	std::list<FileWrapper<std::ofstream, std::ios_base::out>> output;
 	std::string (Token::*output_format)();
 	int thread_count;
-private:
+private:								//	Flag variables, that return True / False depending on if a corresponding argument have been set.
 	static bool flag_input_files;
 	static bool flag_output_files;
 	static bool flag_statistics;
