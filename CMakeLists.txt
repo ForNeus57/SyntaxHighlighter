@@ -13,9 +13,8 @@ set(SRC
         sources/scanner/automata/automata.cpp
         sources/scanner/scanner.cpp
         sources/scanner/automata/state.cpp
-        sources/scanner/exceptions/error_state_reached.h
-        sources/scanner/exceptions/cannot_create_token_not_from_finishing_state.h
-        )
+        sources/run.cpp
+        sources/file_wrapper.cpp sources/file_wrapper.h sources/config.h)
 
 set(COMPILER_FLAGS
         -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20

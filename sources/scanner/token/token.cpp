@@ -13,15 +13,27 @@
 
 //	Static values initialization
 const std::vector<std::vector<char>> Token::INPUT_ALPHABET = {
-		//	INPUT_ALPHABET[Alphabet::LETTERS][n] - All the letters accepted
-		{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'},
-		//	INPUT_ALPHABET[Alphabet::NUMBERS][n] - All the numbers
-		{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'},
-		//	INPUT_ALPHABET[Alphabet::WHITE_CHARACTERS][n] - All the white symbols
-		{' ', '\n', '\0', '\t'},
-		//	INPUT_ALPHABET[Alphabet::SYMBOLS][n] - All the other symbols
-		{'(', ')', '*', '+', '-', '/'}
+	//	INPUT_ALPHABET[Alphabet::LETTERS][n] - All the letters accepted
+	{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'},
+	//	INPUT_ALPHABET[Alphabet::NUMBERS][n] - All the numbers
+	{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'},
+	//	INPUT_ALPHABET[Alphabet::WHITE_CHARACTERS][n] - All the white symbols
+	{' ', '\n', '\0', '\t'},
+	//	INPUT_ALPHABET[Alphabet::SYMBOLS][n] - All the other symbols
+	{'(', ')', '*', '+', '-', '/'}
 };
+const std::vector<std::string> Token::POSSIBLE_COLOURS = {
+	"Aqua",
+	"SkyBlue",
+	"Wheat",
+	"StaleGray",
+	"RosyBrown",
+	"Olive",
+	"Teal",
+	"Khaki",
+	"OrangeRed"
+};
+
 const std::vector<Codes> Token::CODES_TYPES = {Codes::LEFT_BRACKET,Codes::RIGHT_BRACKET,Codes::TIMES,Codes::PLUS,Codes::MINUS,Codes::DIVIDED,Codes::UNSIGNED_INTEGER_NUMBER,Codes::IDENTIFIER,Codes::UNKNOWN};
 
 Token::Token(Codes c, std::string in, Attributes a): code(c), value(), attribute(std::move(a)) {
@@ -58,6 +70,7 @@ Token::Token(Codes c, std::string in, Attributes a): code(c), value(), attribute
 			throw WrongInputAlphabet("");
 		}
 	}
+	this->colour = Token::POSSIBLE_COLOURS[this->code];
 }
 
 Token::operator std::string() const {
@@ -113,4 +126,17 @@ std::variant<unsigned int, char, std::string> Token::getValue() const {
 
 Attributes Token::getAttribute() const {
 	return this->attribute;
+}
+std::string Token::getColour() const {
+	return this->colour;
+}
+std::string Token::print() {
+	return std::string(*this);
+}
+std::string Token::convertToHTML() {
+	if(std::holds_alternative<unsigned int>(this->value))
+		return "<span style=\"color:" + this->colour +"\">" + std::to_string(std::get<unsigned int>(this->value)) + "</span>";
+	else if(std::holds_alternative<char>(this->value))
+		return "<span style=\"color:" + this->colour +"\">" + std::string(1, std::get<char>(this->value)) + "</span>";
+	return "<span style=\"color:" + this->colour +"\">" + std::get<std::string>(this->value) + "</span>";
 }

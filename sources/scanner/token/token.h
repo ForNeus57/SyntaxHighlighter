@@ -41,7 +41,7 @@
  * @see		Token class.
  * @see		automata.h file.
  */
-enum class Codes {
+enum Codes {
 	//	Single value tokens
 		LEFT_BRACKET			= 0,
 		RIGHT_BRACKET			= 1,
@@ -148,7 +148,13 @@ public:
 	 * @brief
 	 * @return
 	 */
-	std::string convertToHTML() const;
+	std::string getColour() const;
+	std::string convertToHTML();
+	/**
+	 * @brief
+	 * @return
+	 */
+	std::string print();
 public:
 	/**
 	 * @brief	Static variable containing all the symbols in ascii table, that we consider in input alphabet of this scanner.
@@ -157,6 +163,7 @@ public:
 	 * @see		Alphabet enum.
 	 */
 	const static std::vector<std::vector<char>> INPUT_ALPHABET;
+	const static std::vector<std::string> POSSIBLE_COLOURS;
 	/**
 	 * @brief	Array that contains all the possible values of Codes enum. It has set like properties, but I will change it later.
 	 * @note	It is an array, that makes it easier to iterate for all the tokens codes.
@@ -188,6 +195,7 @@ private:
 	 * @todo	Consider making it separate variables. Instead of packing them into a tuple. Save memory. :D
 	 */
 	Attributes attribute;
+	std::string colour;
 };
 
 
