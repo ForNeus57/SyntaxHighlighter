@@ -7,7 +7,6 @@
  * @see		token.h
 **/
 
-#include <valarray>
 
 #include "token.h"
 
@@ -130,10 +129,10 @@ Attributes Token::getAttribute() const {
 std::string Token::getColour() const {
 	return this->colour;
 }
-std::string Token::print() {
+std::string Token::print() const {
 	return std::string(*this);
 }
-std::string Token::convertToHTML() {
+std::string Token::convertToHTML() const {
 	if(std::holds_alternative<unsigned int>(this->value))
 		return "<span style=\"color:" + this->colour +"\">" + std::to_string(std::get<unsigned int>(this->value)) + "</span>";
 	else if(std::holds_alternative<char>(this->value))

@@ -8,8 +8,6 @@
 
 #include <iostream>
 
-#include "scanner.h"
-#include "token.h"
 #include "run.h"
 
 /**
@@ -25,26 +23,6 @@
  * @return	0 - all went fine; 1 - not enough arguments were provided.
  */
 int main(int argc, char *argv[]) {
-	Run(argc, argv).start();
-
-	for(int i = 1; i < argc; ++i) {						//	Iterate over all the file provided in arguments.
-		std::cout << "\nFILE: " << argv[i] << "\nFILE NUMBER: " << i << "\nGENERATED TOKENS:\n" << '\n';
-		std::string line;
-		std::ifstream input_file(argv[i]);
-		Scanner s = Scanner();							//	Create a new scanner to clear memory. It isn't needed, but to be 100% sure nothing wasn't passed from previous files.
-		while(std::getline(input_file, line)) {	//	Go through all the lines of a given file.
-			s.addNextLine(line);
-			while(!s.isEmpty()) {						//	Generate all the tokens in this line.
-				try {
-					Token t = s.getToken();					//	I use a method call instead of a function, but I think, that it isn't much of a problem.
-					std::cout << t << '\n';					//	Could be swapped to: std::cout << s.getToken() << '\n';
-				} catch(const WrongInputAlphabet& err){
-					std::cout << err.what();
-					break;
-				}
-			}
-		}
-		input_file.close();								//	Close the file after the use.
-	}
+	Run::getInstance(argc, argv)(&std::cin, &std::cout);
 	return EXIT_SUCCESS;
 }

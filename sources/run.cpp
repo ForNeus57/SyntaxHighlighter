@@ -5,6 +5,20 @@
 #include "run.h"
 
 
+const std::string Run::HTML_START =
+	"<!DOCTYPE html>\n"
+	"<html lang=\"en\">\n"
+		"\t<head>\n"
+			"\t\t<meta charset=\"UTF-8\">\n"
+			"\t\t<title>Output file of colouring process</title>\n"
+		"\t</head>\n"
+		"\t<body>\n";
+const std::string Run::HTML_END =
+		"\t</body>\n"
+	"</html>\n";
+const std::string Run::NORMAL_START = "//  Output file of colouring process\n";
+const std::string Run::NORMAL_END = "\n";
+
 bool Run::flag_input_files = false;
 bool Run::flag_output_files = false;
 bool Run::flag_statistics = false;
@@ -14,12 +28,20 @@ bool Run::flag_version = false;
 bool Run::flag_help = false;
 
 
-Run::Run(int argc, char** argv): program_name(), input(), output(), output_format(&Token::print), thread_count(-1) {
+Run::Run(int argc, char** argv):
+		program_name(),
+		input(),
+		output(),
+		output_contents(&Token::print),
+		output_start(&Run::initialize_output_normal),
+		output_end(&Run::end_output_normal),
+		thread_count(-1)
+	{
 	try {
 		this->parse(argc, argv);
 	} catch (const std::exception &exc) {
 		std::cerr << exc.what() << '\n';
-		std::cerr << "usage:" + this->program_name + " [-i|--input] <input_files> [-o|--output] <output_files> [-s|--statistics] [-H|--HTML] [-t|--threads] <integer_count> [-h|--help] [-v|--version];\n";
+		std::cerr << "usage:" << this->program_name << HELP_INFO;
 		exit(EXIT_FAILURE);
 	}
 }
@@ -47,6 +69,7 @@ void Run::parse(int argc, char** argv) {
 			case hash("--statistics"):
 				++i;
 				this->process_statistics();
+				std::cout << this->program_name << " warning: The statistics argument is currently disable due to it no being implemented as of yet.\n";
 				break;
 			case hash("-H"):
 			case hash("--HTML"):
@@ -56,6 +79,7 @@ void Run::parse(int argc, char** argv) {
 			case hash("-t"):
 			case hash("--threads"):
 				this->process_threads(args, ++i);
+				std::cout << this->program_name << " warning: The threads argument is currently disable due to it no being implemented as of yet.\n";
 				break;
 			case hash("-v"):
 			case hash("--version"):
@@ -71,53 +95,42 @@ void Run::parse(int argc, char** argv) {
 				throw std::runtime_error(this->program_name + " error: unknown commandline argument: " + std::string(args[i].data()));
 		}
 	}
+	if(
+		(this->input.empty() and this->output.size() > 1) or
+		(this->input.size() == 1 and this->output.size() > 1) or
+		(this->input.size() > 1 and this->output.size() > 1 and this->input.size() != this->output.size())
+	) throw std::runtime_error(this->program_name + " error: Unable to convert input files to corresponding output files due to their number mismatch!");
+	this->adjust_thread_behaviour();
 }
 
-void Run::start() {
+void Run::operator()(std::istream* in, std::ostream* out) {
 	static bool hasRun = false;
 	if(hasRun)
 		throw std::runtime_error("This method cannot be ran twice!");
 	hasRun = true;
-/*
-	if(files.empty()) {													//	User did not provide any '-i' or '-o' type commandline arguments therefore we take console as input and output
-		if(threads != -1) std::cout << "BasicCompiler.exe warning: parameter -t|--threads " + std::to_string(threads) + " is not being used since the input is done by console.\n";
-		if(statistics) {
-			std::cerr << "BasicCompiler.exe: unable to calculate statistics of a file/files, without any input files!\n";
-			exit(EXIT_FAILURE);
+	
+	if(this->input.empty() and this->output.empty()) {												//	User did not provide any '-i' or '-o' type commandline arguments therefore we take console as input and output
+		*out << this->output_start();
+		const auto [stream, statistic] = Scanner().operator()(in, out, false, output_contents);
+		*out << stream.str() << this->output_end();
+	} else if(this->input.empty() and this->output.size() == 1) {									//	No output files provided and at least one input file provided.
+		this->output.begin()->getFile() << this->output_start();
+		const auto [stream, statistic] = Scanner().operator()(in, out, false, output_contents);
+		this->output.begin()->getFile() << stream.str() << this->output_end();
+	} else if(!this->input.empty() and this->output.empty()) {										//	No output but many input files.
+		*out << this->output_start();
+		for(auto& in_file : this->input) {
+			const auto [stream, statistic] = Scanner().operator()(in_file.getFile(), false, output_contents);
+			*out << stream.str();
 		}
-		std::string line;
-		Scanner s{};
-		while(true) {
-			std::cin >> line;
-			s.addNextLine(line);
-			while(!s.isEmpty()) {										//	Generate all the tokens in this line.
-				try {
-					Token t = s.getToken();									//	I use a method call instead of a function, but I think, that it isn't much of a problem.
-					std::cout << (t.*token_output)() << '\n';
-				} catch(const WrongInputAlphabet& err){
-					std::cout << err.what();
-					break;
-				}
-			}
+		*out << this->output_end();
+	} else if(this->input.size() == this->output.size()) {
+		for(auto& [in_file, out_file] : std::ranges::views::zip(input, output)) {
+		
 		}
-	} else if(files.size() == 1 and !files.begin()->first.empty()) {	//	No output files provided and at least one input file provided.
-
-	} else if() {
-
+	} else if(this->input.size() > 1 and this->output.size() == 1) {
+	
 	}
-
-	for(const auto& [input, output] : files) {
-		std::ifstream input_file(input.data(), std::ifstream::in);
-		std::ofstream output_file(output.data(), std::ofstream::out);
-		if(!input_file.is_open()) {
-			std::cerr << "BasicCompiler.exe: could not open input file '" << input << "'!\n";
-			exit(EXIT_FAILURE);
-		}
-		if(!output_file.is_open()) {
-			std::cerr << "BasicCompiler.exe: could not open input file '" << output << "'!\n";
-			exit(EXIT_FAILURE);
-		}
-	}*/
 }
 void Run::process_input_files(const std::vector<std::string_view>& arguments, std::size_t& index) {
 	//	Make sure that in the future the argument will not be a duplicate
@@ -151,13 +164,15 @@ void Run::process_html_output() {
 	if(Run::flag_html) throw std::runtime_error(this->program_name + " error: cannot use -H/--HTML parameter twice!");
 	Run::flag_html = true;
 
-	this->output_format = &Token::convertToHTML;
+	this->output_contents = &Token::convertToHTML;
+	this->output_start = &Run::initialize_output_html;
+	this->output_end = &Run::end_output_html;
 }
 void Run::process_threads(const std::vector<std::string_view>& arguments, std::size_t& index) {
 	if(Run::flag_threads) throw std::runtime_error(this->program_name + " error: cannot use -t/--threads parameter twice!");
 	Run::flag_threads = true;
 
-	//	Make sure the next argument is integer, because otherwise it would not be possible parse data.
+	//	Make sure the next argument is integer, because otherwise it would not be possible parse data into an int.
 	if(!std::all_of(arguments[index].begin(), arguments[index].end(), ::isdigit)) throw std::runtime_error(this->program_name + " error: The next argument in relation of -t/--threads is not a digit!");
 	this->thread_count = std::stoi(arguments[index].data());
 	if(this->thread_count < 1) throw std::runtime_error(this->program_name + " error: number of threads to run must be grater or equal one!");
@@ -173,4 +188,16 @@ void Run::process_help() {
 	Run::flag_help = true;
 
 	std::cout << "usage:" << this->program_name << " " << HELP_INFO;
+}
+std::string Run::initialize_output_normal() {
+	return Run::NORMAL_START;
+}
+std::string Run::end_output_normal() {
+	return Run::NORMAL_END;
+}
+std::string Run::initialize_output_html() {
+	return Run::HTML_START;
+}
+std::string Run::end_output_html() {
+	return Run::HTML_END;
 }

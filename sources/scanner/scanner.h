@@ -12,12 +12,13 @@
 
 #include <optional>
 #include <fstream>
+#include <sstream>
+#include <utility>
 
 #include "token.h"
 #include "automata.h"
-
-
-using Statistics = std::tuple<std::size_t, std::size_t, std::size_t, std::array<std::size_t, CODES_SIZE>, std::size_t, std::size_t>;
+#include "scanner.h"
+#include "statistics.h"
 
 
 /**
@@ -31,14 +32,22 @@ public:
 	 * @brief	Default constructor, starting input is empty. There is a need to use .addNextLine(...) method to be able to generate tokens.
 	 */
 	Scanner();
-	/**
-	 * @brief	Constructor, that have already one line assigned to process.
-	 * @param	in	- The line that will be processed.
-	 */
-	explicit Scanner(std::string in);
 public:
-	std::optional<Statistics> operator()(std::ifstream, std::ofstream, bool);
-	std::optional<Statistics> operator()(bool);
+	/**
+	 * @brief	0x0 set sum with 0x1 converted to file stream from string_stream
+	 * @return
+	 */
+	std::pair<std::stringstream, Statistics> operator()(std::istream*, std::ostream*, bool, std::string (Token::*)() const);
+	/**
+	 * @brief	1x0 output string_stream convert to std::cout set sum nx0 for base example and concatenate string_stream set sum nx1 just concatenate to a file instead of a std::cout
+	 * @return
+	 */
+	std::pair<std::stringstream, Statistics> operator()(std::ifstream&, bool, std::string (Token::*)() const);
+	/**
+	 * @brief	nxn with n > 0 in a for loop n times
+	 * @return
+	 */
+	Statistics operator()(std::ifstream&, std::ofstream&, bool, std::string (Token::*)() const);
 public:
 	/**
 	 * @brief	Changes the input attribute to
@@ -48,11 +57,16 @@ public:
 	 */
 	void addNextLine(const std::string& in);
 	/**
+	 * @brief
+	 * @return
+	 */
+	std::string processLine(std::string (Token::*format)() const);
+	/**
 	 * @brief	Generates token from provided string.
 	 * @todo	Make such that we cannot try to generate token out of empty string(because in that case created token can be unpredictable - Token::UNKNOWN).
 	 * @return	Constructed token, ready to be parsed by another module.
 	 */
-	Token getToken();
+	std::optional<Token> getToken();
 public:
 	/**
 	 * @brief	Method used to check the status of token generation process. If it has finished processing provided line.
@@ -61,34 +75,34 @@ public:
 	bool isEmpty();
 private:	//	Empty space for private class methods.
 
-public:
-	/**
-	 * @brief	Simple static variable to better understand certain assignments (mainly relating to col_index attribute).
-	 */
-	const static std::size_t RESET_INDEX = 0;
-private:
-	/**
-	 * @brief
-	 */
-	std::string input;
-	/**
-	 * @brief	Second parameter. Column number counting from 1 to n. Aka which character counting form left this object is referring.
-	 *
-	 * @see		token.h file.
-	 */
-	std::size_t col_index;
-	/**
-	 * @brief	First parameter. Line number counting from 1 to m. Aka which line number counting from top this object is referring.
-	 *
-	 * @see		token.h file.
-	 */
-	std::size_t line_index;
-	/**
-	 * @brief
-	 *
-	 * @see		Automata class.
-	 */
-	Automata A;
+	public:
+		/**
+		 * @brief	Simple static variable to better understand certain assignments (mainly relating to col_index attribute).
+		 */
+		const static std::size_t RESET_INDEX = 0;
+	private:
+		/**
+		 * @brief
+		 */
+		std::string input;
+		/**
+		 * @brief	Second parameter. Column number counting from 1 to n. Aka which character counting form left this object is referring.
+		 *
+		 * @see		token.h file.
+		 */
+		std::size_t col_index;
+		/**
+		 * @brief	First parameter. Line number counting from 1 to m. Aka which line number counting from top this object is referring.
+		 *
+		 * @see		token.h file.
+		 */
+		std::size_t line_index;
+		/**
+		 * @brief
+		 *
+		 * @see		Automata class.
+		 */
+		Automata A;
 };
 
 

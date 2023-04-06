@@ -9,17 +9,17 @@
 #include <string>
 
 class WrongInputAlphabet: public std::exception {
-public:
-	explicit WrongInputAlphabet(const std::string& in) {
-		this->message += "Error occurred while trying to scan next token: " + in + '\n';
-	}
-public:
-	const char* what () const noexcept override {
-		return message.c_str();
-	}
-private:
-	std::string message = "Provided character is not supported by this scanner!\n"
-						  "Additional info: ";
+	public:
+		explicit WrongInputAlphabet(const std::string& in) {
+			this->message += "Error occurred while trying to scan next token: " + in + '\n';
+		}
+	public:
+		const char* what () const noexcept override {
+			return message.c_str();
+		}
+	private:
+		std::string message = "Provided character is not supported by this scanner!\n"
+							  "Additional info: ";
 };
 
 

@@ -8,7 +8,7 @@ set(TEST
         ../tests/scanner/token_test.cpp
         ../tests/scanner/automata_test.cpp
         ../tests/scanner/state_test.cpp
-        ../tests/scanner/run.cpp
+        ../tests/scanner/run_tests.cpp
         )
 
 add_executable(Google_Tests_run ${TEST})

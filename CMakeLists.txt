@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 project(BasicCompiler)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(MAIN
@@ -14,10 +14,14 @@ set(SRC
         sources/scanner/scanner.cpp
         sources/scanner/automata/state.cpp
         sources/run.cpp
-        sources/file_wrapper.cpp sources/file_wrapper.h sources/config.h)
+        sources/common/file_wrapper.cpp
+        sources/common/statistics.cpp
+        sources/common/statistics.h
+        )
+
 
 set(COMPILER_FLAGS
-        -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -std=c++20
+        -g -std=c++23 -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -pipe
         )
 
 add_subdirectory(includes)
@@ -27,6 +31,7 @@ include_directories(sources/scanner)
 include_directories(sources/scanner/token)
 include_directories(sources/scanner/exceptions)
 include_directories(sources/scanner/automata)
+include_directories(sources/common)
 include_directories(sources/)
 
 add_library(${PROJECT_NAME}-lib ${SRC})

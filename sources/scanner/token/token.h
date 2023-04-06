@@ -19,6 +19,8 @@
 
 #define CODES_SIZE 9
 
+
+
 /**
  * @brief	Simple enum that is used to store code for the token.
  *
@@ -98,104 +100,108 @@ using Attributes = std::pair<std::size_t, std::size_t>;
  * @see		Automata class.
  */
 class Token {
-public:
-	/**
-	 * @brief	Constructor for this class. That assigns the value of the token based on the provided code.
-	 *
-	 * @throws	WrongInputAlphabet if this object is tried to be created with codes == Codes::UNKNOWN
-	 *
-	 * @param	c	- From this parameter the Token value is deducted.
-	 * @param	s	- String that lead to creating a Token in Automata.
-	 * @param	a	- All other necessary data i.e. location for error handling.
-	 *
-	 * @see		Automata class.
-	 * @see		Codes enum.
-	 */
-	Token(Codes c, std::string s, Attributes a);
-public:
-	/**
-	 * @brief	Operator that makes it easier to display the information of Token contents. It casts this class object to std::string.
-	 *
-	 * @return	std::string, that contains information about token features:
-	 * 				"(code:{Some value from Codes enum}, value:{value of the token}, line:{line number}, col:{column number})"
-	 */
-	explicit operator std::string() const;
-	/**
-	 * @brief	Simple stream operator, to make it able to be printed into console.
-	 * @param	os		- Output stream
-	 * @param	other	- Some token object.
-	 * @return	output stream back to the source.
-	 */
-	friend std::ostream& operator<<(std::ostream& os, const Token& other) { return os << std::string(other); }
-public:
-	/**
-	 * @brief	Simple getter for code attribute.
-	 * @return 	One of Codes enum elements.
-	 */
-	Codes getCode() const;
-	/**
-	 * @brief	Simple getter for value attribute.
-	 * @return 	One of the following: uint, char or std::string elements.
-	 */
-	std::variant<unsigned int, char, std::string> getValue() const;
-	/**
-	 * @brief	Simple getter for attribute attribute.
-	 * @note	Not the greatest naming of the variable :)
-	 * @return 	One of the following: uint, char or std::string elements.
-	 */
-	Attributes getAttribute() const;
-	/**
-	 * @brief
-	 * @return
-	 */
-	std::string getColour() const;
-	std::string convertToHTML();
-	/**
-	 * @brief
-	 * @return
-	 */
-	std::string print();
-public:
-	/**
-	 * @brief	Static variable containing all the symbols in ascii table, that we consider in input alphabet of this scanner.
-	 * @note	This variable makes it very easy to add new characters to alphabet. Simply extend the vector.
-	 *
-	 * @see		Alphabet enum.
-	 */
-	const static std::vector<std::vector<char>> INPUT_ALPHABET;
-	const static std::vector<std::string> POSSIBLE_COLOURS;
-	/**
-	 * @brief	Array that contains all the possible values of Codes enum. It has set like properties, but I will change it later.
-	 * @note	It is an array, that makes it easier to iterate for all the tokens codes.
-	 * @note	Makes it easy to see the codes length: Token::CODES_TYPES.size().
-	 *
-	 * @todo	Make this variable an ordered set, to iterate easier and make sure, that their values are unique.
-	 * @todo	ADD ITERATOR TO THIS ENUM, SUCH THAT ++ returns next element. TEMPORARY FIX: vector<Codes> Token::CODES_TYPES not memory efficient
-	 *
-	 * @see		Codes enum.
-	 */
-	const static std::vector<Codes> CODES_TYPES;
-private:
-	/**
-	 * @brief	Code attribute of token, basically informs us of the created token type. Is it a Plus symbol, minus...
-	 * @note	It also contains the information about how to understand coming in constructor string and making it proper value.
-	 * @see		Codes enum.
-	 */
-	Codes code;
-	/**
-	 * @brief	Value stored of a token.
-	 * @note	It is 100% dependent on the previous attribute: Token::code. For example single value tokens are guaranteed to ba a char, UNSIGNED_INTEGER, unsigned integer and so on.
-	 * @note	Why use std::variant<...>? Because this attribute can hold single and multi value tokens.
-	 */
-	std::variant<unsigned int, char, std::string> value;
-	/**
-	 * @brief	Simple tuple, that contains all the attributes that we want to assign to Token.
-	 *
-	 * @todo	Change the name of this variable to something different i.e. position idk.
-	 * @todo	Consider making it separate variables. Instead of packing them into a tuple. Save memory. :D
-	 */
-	Attributes attribute;
-	std::string colour;
+	public:
+		/**
+		 * @brief	Constructor for this class. That assigns the value of the token based on the provided code.
+		 *
+		 * @throws	WrongInputAlphabet if this object is tried to be created with codes == Codes::UNKNOWN
+		 *
+		 * @param	c	- From this parameter the Token value is deducted.
+		 * @param	s	- String that lead to creating a Token in Automata.
+		 * @param	a	- All other necessary data i.e. location for error handling.
+		 *
+		 * @see		Automata class.
+		 * @see		Codes enum.
+		 */
+		Token(Codes c,std::string s, Attributes a);
+	public:
+		/**
+		 * @brief	Operator that makes it easier to display the information of Token contents. It casts this class object to std::string.
+		 *
+		 * @return	std::string, that contains information about token features:
+		 * 				"(code:{Some value from Codes enum}, value:{value of the token}, line:{line number}, col:{column number})"
+		 */
+		explicit operator std::string() const;
+		/**
+		 * @brief	Simple stream operator, to make it able to be printed into console.
+		 * @param	os		- Output stream
+		 * @param	other	- Some token object.
+		 * @return	output stream back to the source.
+		 */
+		friend std::ostream& operator<<(std::ostream& os, const Token& other) { return os <<std::string(other); }
+	public:
+		/**
+		 * @brief	Simple getter for code attribute.
+		 * @return 	One of Codes enum elements.
+		 */
+		Codes getCode() const;
+		/**
+		 * @brief	Simple getter for value attribute.
+		 * @return 	One of the following: uint, char or std::string elements.
+		 */
+		std::variant<unsigned int, char, std::string> getValue() const;
+		/**
+		 * @brief	Simple getter for attribute attribute.
+		 * @note	Not the greatest naming of the variable :)
+		 * @return 	One of the following: uint, char or std::string elements.
+		 */
+		Attributes getAttribute() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		std::string getColour() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		std::string convertToHTML() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		std::string print() const;
+	public:
+		/**
+		 * @brief	Static variable containing all the symbols in ascii table, that we consider in input alphabet of this scanner.
+		 * @note	This variable makes it very easy to add new characters to alphabet. Simply extend the vector.
+		 *
+		 * @see		Alphabet enum.
+		 */
+		const static std::vector<std::vector<char>> INPUT_ALPHABET;
+		const static std::vector<std::string> POSSIBLE_COLOURS;
+		/**
+		 * @brief	Array that contains all the possible values of Codes enum. It has set like properties, but I will change it later.
+		 * @note	It is an array, that makes it easier to iterate for all the tokens codes.
+		 * @note	Makes it easy to see the codes length: Token::CODES_TYPES.size().
+		 *
+		 * @todo	Make this variable an ordered set, to iterate easier and make sure, that their values are unique.
+		 * @todo	ADD ITERATOR TO THIS ENUM, SUCH THAT ++ returns next element. TEMPORARY FIX: vector<Codes> Token::CODES_TYPES not memory efficient
+		 *
+		 * @see		Codes enum.
+		 */
+		const static std::vector<Codes> CODES_TYPES;
+	private:
+		/**
+		 * @brief	Code attribute of token, basically informs us of the created token type. Is it a Plus symbol, minus...
+		 * @note	It also contains the information about how to understand coming in constructor string and making it proper value.
+		 * @see		Codes enum.
+		 */
+		Codes code;
+		/**
+		 * @brief	Value stored of a token.
+		 * @note	It is 100% dependent on the previous attribute: Token::code. For example single value tokens are guaranteed to ba a char, UNSIGNED_INTEGER, unsigned integer and so on.
+		 * @note	Why use std::variant<...>? Because this attribute can hold single and multi value tokens.
+		 */
+		std::variant<unsigned int, char, std::string> value;
+		/**
+		 * @brief	Simple tuple, that contains all the attributes that we want to assign to Token.
+		 *
+		 * @todo	Change the name of this variable to something different i.e. position idk.
+		 * @todo	Consider making it separate variables. Instead of packing them into a tuple. Save memory. :D
+		 */
+		Attributes attribute;
+		std::string colour;
 };
 
 
