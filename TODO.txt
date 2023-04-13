@@ -1,0 +1,2 @@
+Move googleTest framework to extern folder
+Change the name of a syntax_colorizer_lib to ${Project_name}-lib

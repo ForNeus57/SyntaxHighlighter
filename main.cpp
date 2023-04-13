@@ -8,21 +8,21 @@
 
 #include <iostream>
 
-#include "run.h"
+//#include "includes/syntax_colorizer_lib/headers/common/run.h"
 
 /**
  * @brief	Main function, that starts the program; expects the input to be in files to which location was provided in program arguments.
  *
- * @todo	Make the ability to take data for scanner and others from standard input like console.
+ * @todo	Make the ability to take data for model and others from standard input like console.
  * @todo	Make the ability to save the output to a file
  * @todo	Add statistics how many correct tokens have been found in a provided file or console input.
- * @todo	Implement scanner class as an different thread separated from for example parsing, so that the parsing isn't stopped for producing next token.
+ * @todo	Implement model class as an different thread separated from for example parsing, so that the parsing isn't stopped for producing next token.
  *
  * @param	argc	How many argument ware given (starting from 1, because 0 is the .exe file name).
  * @param	argv	Vector of strings containing commandline arguments.
  * @return	0 - all went fine; 1 - not enough arguments were provided.
  */
-int main(int argc, char *argv[]) {
-	Run::getInstance(argc, argv)(&std::cin, &std::cout);
+int main() {
+	//Run::getInstance(argc, argv)(&std::cin, &std::cout);
 	return EXIT_SUCCESS;
 }

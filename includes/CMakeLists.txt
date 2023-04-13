@@ -1,15 +1,28 @@
-project(Includes)
+set(LIB_DIRECTORY
+		${PROJECT_SOURCE_DIR}/includes/syntax_colorizer_lib
+		)
 
-add_subdirectory(googletest)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+# comented method are no tested / implemented in moder way
+set(SRC
+		#${LIB_DIRECTORY}/sources/common/run.cpp
+		${LIB_DIRECTORY}/sources/common/file_wrapper.cpp
+		${LIB_DIRECTORY}/sources/common/statistics.cpp
+		#${LIB_DIRECTORY}/sources/model/scanner.cpp
+		#${LIB_DIRECTORY}/sources/model/automata/automata.cpp
+		${LIB_DIRECTORY}/sources/model/automata/state.cpp
+		${LIB_DIRECTORY}/sources/model/token/base_token.cpp
+		${LIB_DIRECTORY}/sources/model/token/foundation.cpp
+		#${LIB_DIRECTORY}/sources/model/token/token.cpp
+		)
 
-set(TEST
-        ../tests/scanner/scanner_test.cpp
-        ../tests/scanner/token_test.cpp
-        ../tests/scanner/automata_test.cpp
-        ../tests/scanner/state_test.cpp
-        ../tests/scanner/run_tests.cpp
-        )
+set(COMPILER_FLAGS
+		-g -std=c++23 -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -pipe
+		)
 
-add_executable(Google_Tests_run ${TEST})
-target_link_libraries(Google_Tests_run gtest gtest_main)
+add_library(${PROJECT_NAME}-lib STATIC ${SRC})
+
+target_include_directories(${PROJECT_NAME}-lib PUBLIC
+		${PROJECT_SOURCE_DIR}/config
+		)
+
+target_compile_options(${PROJECT_NAME}-lib PRIVATE ${COMPILER_FLAGS})
