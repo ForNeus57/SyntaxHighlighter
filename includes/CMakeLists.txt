@@ -19,10 +19,10 @@ set(COMPILER_FLAGS
 		-g -std=c++23 -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -pipe
 		)
 
+add_subdirectory(googletest)
+
 add_library(${PROJECT_NAME}-lib STATIC ${SRC})
 
-target_include_directories(${PROJECT_NAME}-lib PUBLIC
-		${PROJECT_SOURCE_DIR}/config
-		)
+target_include_directories(${PROJECT_NAME}-lib PUBLIC ${PROJECT_SOURCE_DIR}/config)
 
 target_compile_options(${PROJECT_NAME}-lib PRIVATE ${COMPILER_FLAGS})
