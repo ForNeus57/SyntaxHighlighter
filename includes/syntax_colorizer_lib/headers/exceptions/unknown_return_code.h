@@ -8,6 +8,7 @@
 #include <exception>
 #include <string>
 
+
 class UnknownReturnCode: public std::exception {
 	public:
 		explicit UnknownReturnCode(const std::string & msg = "Not given.") {

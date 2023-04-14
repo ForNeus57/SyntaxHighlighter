@@ -11,7 +11,6 @@ set(SRC
 		#${LIB_DIRECTORY}/sources/model/automata/automata.cpp
 		${LIB_DIRECTORY}/sources/model/automata/state.cpp
 		${LIB_DIRECTORY}/sources/model/token/base_token.cpp
-		${LIB_DIRECTORY}/sources/model/token/foundation.cpp
 		#${LIB_DIRECTORY}/sources/model/token/token.cpp
 		)
 

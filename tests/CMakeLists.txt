@@ -8,8 +8,7 @@ set(TEST
 		model/automata_test.cpp
 		model/state_test.cpp
 		model/base_token_tests.cpp
-		model/primitive_token_tests.cpp
-        )
+		)
 
 set(COMPILER_FLAGS
         -g -std=c++23 -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -pipe

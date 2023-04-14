@@ -10,20 +10,15 @@
 
 #include "../../../headers/model/token/token.h"
 
-const std::vector<std::string> Token::POSSIBLE_COLOURS = {
-	"Aqua",
-	"SkyBlue",
-	"Wheat",
-	"StaleGray",
-	"RosyBrown",
-	"Olive",
-	"Teal",
-	"Khaki",
-	"OrangeRed"
-};
-const std::vector<Codes> Token::CODES_TYPES = {Codes::LEFT_BRACKET,Codes::RIGHT_BRACKET,Codes::TIMES,Codes::PLUS,Codes::MINUS,Codes::DIVIDED,Codes::UNSIGNED_INTEGER_NUMBER,Codes::IDENTIFIER,Codes::UNKNOWN};
 
-Token::Token(Codes c, std::string in, std::size_t line, std::size_t column): code(c), value(), line_number(), column_number() {
+template class Token<std::string>;
+template class Token<char>;
+template class Token<int>;
+template class Token<double>;
+
+
+template<typename T>
+Token<T>::Token(Codes c, std::string in, std::size_t line, std::size_t column): code(c), value(), line_number(), column_number() {
 	//	This is where the code deducts how to interpret a coming string.
 	switch (this->code) {
 		case Codes::LEFT_BRACKET: case Codes::RIGHT_BRACKET: case Codes::TIMES: case Codes::PLUS: case Codes::MINUS: case Codes::DIVIDED: {

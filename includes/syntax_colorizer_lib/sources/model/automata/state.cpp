@@ -4,12 +4,12 @@
 
 #include "../../../headers/model/automata/state.h"
 
-State::State(): return_code(Codes::UNKNOWN), is_accepting(false) {}
-State::State(Codes c): return_code(c), is_accepting(true) {}
-State::State(const State& source): return_code(Codes::UNKNOWN), is_accepting(false) {
+State::State(): return_code(BaseToken::Codes::UNKNOWN), is_accepting(false) {}
+State::State(BaseToken::Codes c): return_code(c), is_accepting(true) {}
+State::State(const State& source): return_code(BaseToken::Codes::UNKNOWN), is_accepting(false) {
 	this->copy(source);
 }
-State::State(State&& source) noexcept: return_code(Codes::UNKNOWN), is_accepting(false) {
+State::State(State&& source) noexcept: return_code(BaseToken::Codes::UNKNOWN), is_accepting(false) {
 	this->move(std::move(source));
 }
 
@@ -26,7 +26,7 @@ State& State::operator=(State&& rhs) noexcept {
 	return *this;
 }
 
-Codes State::getReturnCode() const {
+BaseToken::Codes State::getReturnCode() const {
 	return this->return_code;
 }
 
