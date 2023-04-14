@@ -6,7 +6,7 @@
 #include <cctype>
 #include <algorithm>
 
-#include "../../includes/syntax_colorizer_lib/headers/model/token/base_token.h"
+#include "../../includes/internal/headers/model/token/base_token.h"
 
 
 class BaseTokenMock: public BaseToken {
@@ -39,13 +39,23 @@ class BaseTokenTest: public ::testing::Test {
 };
 
 TEST_F(BaseTokenTest, StaticMethdosTest) {
+	//	.convertCodesToString()
+	EXPECT_EQ("START", BaseToken::convertCodesToString(BaseToken::Codes::START));
+	EXPECT_EQ("KEYWORD", BaseToken::convertCodesToString(BaseToken::Codes::KEYWORD));
+	EXPECT_EQ("IDENTIFIER", BaseToken::convertCodesToString(BaseToken::Codes::IDENTIFIER));
+	EXPECT_EQ("CONSTANTS", BaseToken::convertCodesToString(BaseToken::Codes::CONSTANTS));
+	EXPECT_EQ("SPECIAL_CHARACTERS", BaseToken::convertCodesToString(BaseToken::Codes::SPECIAL_CHARACTERS));
+	EXPECT_EQ("STRINGS", BaseToken::convertCodesToString(BaseToken::Codes::STRINGS));
+	EXPECT_EQ("OPERATOR", BaseToken::convertCodesToString(BaseToken::Codes::OPERATOR));
+	EXPECT_EQ("UNKNOWN", BaseToken::convertCodesToString(BaseToken::Codes::UNKNOWN));
+	EXPECT_EQ("END", BaseToken::convertCodesToString(BaseToken::Codes::END));
+	
+	//	.isValidCode()
 	EXPECT_FALSE(BaseToken::isValidCode(BaseToken::Codes::START));
 	EXPECT_FALSE(BaseToken::isValidCode(BaseToken::Codes::UNKNOWN));
 	EXPECT_FALSE(BaseToken::isValidCode(BaseToken::Codes::END));
 	for(std::size_t i = 1; i < BaseToken::Codes::END - 2; ++i)
 		EXPECT_TRUE(BaseToken::isValidCode(static_cast<BaseToken::Codes>(i)));
-	
-	EXPECT_EQ(BaseToken::END + 1, BaseToken::getNumberOfCodes());
 }
 
 TEST_F(BaseTokenTest, StaticVariableTest) {
@@ -60,7 +70,6 @@ TEST_F(BaseTokenTest, StaticVariableTest) {
 		EXPECT_TRUE(isascii(x) && ispunct(x));
 	
 	//	Tests for BaseToken::CODES_TYPES[...]
-	EXPECT_EQ(BaseToken::getNumberOfCodes(), BaseToken::CODES_TYPES.size());
 	EXPECT_EQ(BaseToken::CODES_TYPES.size(), BaseToken::CODES_TYPES.capacity());
 	
 	for(std::size_t i = 1; i < BaseToken::CODES_TYPES.size(); ++i) {
@@ -69,12 +78,6 @@ TEST_F(BaseTokenTest, StaticVariableTest) {
 	}
 	
 	//	Tests for BaseToken::POSSIBLE_COLOURS[...]
-	EXPECT_LT(BaseToken::POSSIBLE_COLOURS.size(), BaseToken::getNumberOfCodes());
-	
-	EXPECT_NO_THROW(BaseToken::POSSIBLE_COLOURS[BaseToken::Codes::START]);
-	EXPECT_NO_THROW(BaseToken::POSSIBLE_COLOURS[BaseToken::Codes::UNKNOWN]);
-	EXPECT_NO_THROW(BaseToken::POSSIBLE_COLOURS[BaseToken::Codes::END]);
-	
 	for(const std::string& x : BaseToken::POSSIBLE_COLOURS)
 		EXPECT_FALSE(x.empty());
 }

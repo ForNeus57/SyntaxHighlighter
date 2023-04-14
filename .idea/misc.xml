@@ -3,6 +3,8 @@
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
   <component name="CidrRootsConfiguration">
     <sourceRoots>
+      <file path="$PROJECT_DIR$/includes/internal/headers" />
+      <file path="$PROJECT_DIR$/includes/internal/sources" />
       <file path="$PROJECT_DIR$/includes/syntax_colorizer_lib" />
       <file path="$PROJECT_DIR$/includes/syntax_colorizer_lib/headers" />
       <file path="$PROJECT_DIR$/sources" />

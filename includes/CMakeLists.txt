@@ -1,5 +1,5 @@
 set(LIB_DIRECTORY
-		${PROJECT_SOURCE_DIR}/includes/syntax_colorizer_lib
+		${PROJECT_SOURCE_DIR}/includes/internal
 		)
 
 # comented method are no tested / implemented in moder way
@@ -18,7 +18,7 @@ set(COMPILER_FLAGS
 		-g -std=c++23 -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -pipe
 		)
 
-add_subdirectory(googletest)
+add_subdirectory(external/googletest)
 
 add_library(${PROJECT_NAME}-lib STATIC ${SRC})
 
