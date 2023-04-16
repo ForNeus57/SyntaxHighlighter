@@ -67,6 +67,22 @@ class Token final: public BaseToken {
 		 * @return 	One of the following: uint, char or std::string elements.
 		 */
 		ValueType getValue() const;
+	public:
+		/**
+		 * @brief	Method ....
+		 * @return 	The length of std::string(this->Value).size()
+		 */
+		std::size_t ValueShift() const;
+		/**
+		 * @brief
+		 * @return 	this->print().size() - this->ValueShift()
+		 */
+		std::size_t printShift() const;
+		/**
+		 * @brief
+		 * @return	this->printHTML().size() - this->ValueShift()
+		 */
+		std::size_t printHTMLShift() const;
 		/**
 		 * @brief
 		 * @return
