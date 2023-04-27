@@ -1,7 +1,7 @@
 /**
  * @file 	token.cpp
  * @version 0.027
- * @author 	Dominik Breksa, dominikbreksa@gmail.com
+ * @author 	Dominik Breksa
  * @date 	08.03.2023
  * @brief	Source file relating to Token class.
  * @see		token.h
@@ -23,22 +23,22 @@ Token<T>::Token(BaseToken::Codes type, ValueType val, std::size_t line, std::siz
 template<>
 Token<std::string>::operator std::string() const {
 	std::string code_str = BaseToken::convertCodesToString(this->getCode());
-	return "(code:" + code_str + ", value:" + this->value + ", line:" + std::to_string(this->getLine()) + ", col:" + std::to_string(this->getColumn()) + ")";
+	return "(code:" + code_str + ", colour:" + this->getColour() + ", value:" + this->value + ", line:" + std::to_string(this->getLine()) + ", col:" + std::to_string(this->getColumn()) + ")";
 }
 template<>
 Token<char>::operator std::string() const {
 	std::string code_str = BaseToken::convertCodesToString(this->getCode());
-	return "(code:" + code_str + ", value:" + this->value + ", line:" + std::to_string(this->getLine()) + ", col:" + std::to_string(this->getColumn()) + ")";
+	return "(code:" + code_str + ", colour:" + this->getColour() + ", value:" + this->value + ", line:" + std::to_string(this->getLine()) + ", col:" + std::to_string(this->getColumn()) + ")";
 }
 template<>
 Token<int>::operator std::string() const {
 	std::string code_str = BaseToken::convertCodesToString(this->getCode());
-	return "(code:" + code_str + ", value:" + std::to_string(this->value) + ", line:" + std::to_string(this->getLine()) + ", col:" + std::to_string(this->getColumn()) + ")";
+	return "(code:" + code_str + ", colour:" + this->getColour() + ", value:" + std::to_string(this->value) + ", line:" + std::to_string(this->getLine()) + ", col:" + std::to_string(this->getColumn()) + ")";
 }
 template<>
 Token<double>::operator std::string() const {
 	std::string code_str = BaseToken::convertCodesToString(this->getCode());
-	return "(code:" + code_str + ", value:" + std::to_string(this->value) + ", line:" + std::to_string(this->getLine()) + ", col:" + std::to_string(this->getColumn()) + ")";
+	return "(code:" + code_str + ", colour:" + this->getColour() + ", value:" + std::to_string(this->value) + ", line:" + std::to_string(this->getLine()) + ", col:" + std::to_string(this->getColumn()) + ")";
 }
 
 template<typename T>
@@ -64,4 +64,28 @@ std::string Token<int>::printHTML() const {
 template<>
 std::string Token<double>::printHTML() const {
 	return "<pra style=\"color: " + this->getColour() +"\">" + std::to_string(this->value) + "</pra>";
+}
+template<>
+std::size_t Token<std::string>::valueShift() const {
+	return this->value.size();
+}
+template<>
+std::size_t Token<char>::valueShift() const {
+	return 1;
+}
+template<>
+std::size_t Token<int>::valueShift() const {
+	return std::to_string(this->value).size();
+}
+template<>
+std::size_t Token<double>::valueShift() const {
+	return std::to_string(this->value).size();
+}
+template<typename T>
+std::size_t Token<T>::printShift() const {
+	return 37 + this->getColour().size() + BaseToken::convertCodesToString(this->getCode()).size() + std::to_string(this->getLine()).size() + std::to_string(this->getColumn()).size();
+}
+template<typename T>
+std::size_t Token<T>::printHTMLShift() const {
+	return 27 + this->getColour().size();
 }

@@ -2,7 +2,7 @@ set(LIB_DIRECTORY
 		${PROJECT_SOURCE_DIR}/includes/internal
 		)
 
-# comented method are no tested / implemented in moder way
+# comented method are no tested / implemented in a modern way
 set(SRC
 		#${LIB_DIRECTORY}/sources/common/run.cpp
 		${LIB_DIRECTORY}/sources/common/file_wrapper.cpp
@@ -11,7 +11,7 @@ set(SRC
 		#${LIB_DIRECTORY}/sources/model/automata/automata.cpp
 		${LIB_DIRECTORY}/sources/model/automata/state.cpp
 		${LIB_DIRECTORY}/sources/model/token/base_token.cpp
-		#${LIB_DIRECTORY}/sources/model/token/token.cpp
+		${LIB_DIRECTORY}/sources/model/token/token.cpp
 		)
 
 set(COMPILER_FLAGS

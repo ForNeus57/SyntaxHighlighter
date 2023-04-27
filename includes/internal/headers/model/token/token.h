@@ -1,7 +1,7 @@
 /**
  * @file 	token.h
  * @version 0.027
- * @author 	Dominik Breksa, dominikbreksa[at]gmail.com
+ * @author 	Dominik Breksa
  * @date 	08.03.2023
  * @brief	Header file relating to Token class.
  * @see		token.cpp file.
@@ -69,10 +69,20 @@ class Token final: public BaseToken {
 		ValueType getValue() const;
 	public:
 		/**
+		 * @brief
+		 * @return
+		 */
+		std::string print() const override;
+		/**
+		 * @brief
+		 * @return
+		 */
+		std::string printHTML() const override;
+		/**
 		 * @brief	Method ....
 		 * @return 	The length of std::string(this->Value).size()
 		 */
-		std::size_t ValueShift() const;
+		std::size_t valueShift() const;
 		/**
 		 * @brief
 		 * @return 	this->print().size() - this->ValueShift()
@@ -83,16 +93,6 @@ class Token final: public BaseToken {
 		 * @return	this->printHTML().size() - this->ValueShift()
 		 */
 		std::size_t printHTMLShift() const;
-		/**
-		 * @brief
-		 * @return
-		 */
-		std::string print() const override;
-		/**
-		 * @brief
-		 * @return
-		 */
-		std::string printHTML() const override;
 	private:
 		/**
 		 * @brief	Value stored of a token.

@@ -1,7 +1,7 @@
 /**
  * @file 	state.h
  * @version 0.027
- * @author 	Dominik Breksa, dominikbreksa@gmail.com
+ * @author 	Dominik Breksa
  * @date 	10.03.2023
  * @brief	Header file relating to State class.
  * @see		state.cpp file.
@@ -34,21 +34,18 @@ class State {
 		 * @brief
 		 * @param source
 		 */
-		State(const State& source);
+		State(const State& source) = default;
 		/**
 		 * @brief
 		 * @param source
 		 */
-		State(State&& source) noexcept;
+		State(State&& source) noexcept = default;
 	public:
-		State& operator=(const State& rhs) noexcept;
-		State& operator=(State&& rhs) noexcept;
+		State& operator=(const State& rhs) = default;
+		State& operator=(State&& rhs) noexcept = default;
 	public:
 		BaseToken::Codes getReturnCode() const;
 		bool isAccepting() const;
-	private:
-		void copy(const State & source);
-		void move(State && source);
 	private:
 		/**
 		 * @brief	Instructions given to a Token constructor how to create token.

@@ -24,21 +24,19 @@ class BaseTokenTest: public ::testing::Test {
 			m0 = nullptr;
 			TEST_STRING = "TEST";
 			DEFAULT_TEXT_POSITION = 0;
-			ITERATION_LIMIT = 100;
+			TEST_VALUES = {1049544336, 1074442503, 687392545, 1955552446, 1168883164, 415136718, 1398007497, 17107835, 609012671, 271730254, 841420711, 247809451, 1090393496, 562900903, 642651866, 1736305822, 1189710974, 1433360269, 1366822096, 176765774, 1692468001, 1437163006, 1957229471, 1300716634, 608641288, 612721961, 396322064, 1489715469, 880426812, 2044843973, 760576420, 1058537775, 1611151479, 1657655478, 1513337099, 1412088066, 133259820, 1672178320, 1187225268, 1851841892, 751518114, 689080411, 1864862519, 1158622757, 1512839724, 1172072986, 1813160815, 803472151, 1072352519, 1718470390, 420161254, 2067614707, 159945084, 1218305715, 425805724, 1388064247, 15727944, 193746856, 1693862347, 1670321136, 1087408429, 911855168,439179920, 351065485, 1572328760, 724255089, 776494519, 1105773086, 141525793, 257020689, 1966802994, 762097185, 502907825, 1628649589, 1079205414, 316762934, 303953491, 1713829664, 1562660061, 175715709, 141425976, 263001029, 1095674622, 636631028, 127073472, 1175641095, 1121244765, 2100698576, 565255243, 302486843, 1525295218, 61403657, 673321950, 1251157237, 540132037, 792868266, 1200370492, 652677929, 1717207950, 1735077415};
 		}
 		void SetUp() override {
-			m0 = new BaseTokenMock(BaseToken::Codes::KEYWORD, 0, 0);
+			m0 = std::make_unique<BaseTokenMock>(BaseToken::Codes::KEYWORD, 0, 0);
 		}
-		void TearDown() override {
-			delete m0;
-		}
-		BaseTokenMock* m0;
+		void TearDown() override {}
+		std::unique_ptr<BaseTokenMock> m0;
+		std::array<std::size_t, 100> TEST_VALUES;
 		std::string TEST_STRING;
 		std::size_t DEFAULT_TEXT_POSITION;
-		std::size_t ITERATION_LIMIT;
 };
 
-TEST_F(BaseTokenTest, StaticMethdosTest) {
+TEST_F(BaseTokenTest, StaticMethodsTest) {
 	//	.convertCodesToString()
 	EXPECT_EQ("START", BaseToken::convertCodesToString(BaseToken::Codes::START));
 	EXPECT_EQ("KEYWORD", BaseToken::convertCodesToString(BaseToken::Codes::KEYWORD));
@@ -67,7 +65,7 @@ TEST_F(BaseTokenTest, StaticVariableTest) {
 	for(char x : BaseToken::INPUT_ALPHABET[BaseToken::Alphabet::WHITE_CHARACTERS])
 		EXPECT_TRUE(std::isspace(x));
 	for(char x : BaseToken::INPUT_ALPHABET[BaseToken::Alphabet::OPERATORS])
-		EXPECT_TRUE(isascii(x) && ispunct(x));
+		EXPECT_TRUE(isascii(x) and ispunct(x));
 	
 	//	Tests for BaseToken::CODES_TYPES[...]
 	EXPECT_EQ(BaseToken::CODES_TYPES.size(), BaseToken::CODES_TYPES.capacity());
@@ -105,11 +103,10 @@ TEST_F(BaseTokenTest, MainConstructorTest) {
 
 TEST_F(BaseTokenTest, GettersAndSettersTest) {
 	//	Getter methods
-	for(std::size_t i = DEFAULT_TEXT_POSITION; i < ITERATION_LIMIT; ++i) {
-		for(std::size_t j = DEFAULT_TEXT_POSITION; j < ITERATION_LIMIT; ++j) {
+	for(std::size_t i: TEST_VALUES) {
+		for(std::size_t j: TEST_VALUES) {
 			for(std::size_t k = 1; k < BaseToken::Codes::END - 2; ++k) {
-				delete m0;
-				m0 = new BaseTokenMock(static_cast<BaseToken::Codes>(k), i, j);
+				m0 = std::make_unique<BaseTokenMock>(static_cast<BaseToken::Codes>(k), i, j);
 				EXPECT_EQ(static_cast<BaseToken::Codes>(k), m0->getCode());
 				EXPECT_EQ(i, m0->getLine());
 				EXPECT_EQ(j, m0->getColumn());

@@ -29,7 +29,7 @@ const std::vector<BaseToken::Codes> BaseToken::CODES_TYPES = BaseToken::generate
 
 //	Constructors definitions
 BaseToken::BaseToken(Codes type, std::size_t line, std::size_t col): code(type), line_coordinate(line), column_coordinate(col) {
-	if(!BaseToken::isValidCode(type)) throw std::invalid_argument("Unable to create an object from BaseToken::Codes::START || BaseToken::Codes::UNKNOWN || BaseToken::Codes::END!\nUse BaseToken::isValidCode() method to check if the type argument is suitable for an argument!");
+	if(!BaseToken::isValidCode(type)) throw std::invalid_argument("Unable to create an object from BaseToken::Codes::START || BaseToken::Codes::UNKNOWN || BaseToken::Codes::END! Use BaseToken::isValidCode() method to check if the type argument is suitable for an argument!");
 	
 	this->code = type;
 	this->colour = BaseToken::POSSIBLE_COLOURS[type - 1];
@@ -70,8 +70,9 @@ std::string BaseToken::convertCodesToString(Codes type) {
 			return "UNKNOWN";
 		case Codes::END:
 			return "END";
+		default:
+			return "WRONG";
 	}
-	return "WRONG";
 }
 bool BaseToken::isValidCode(Codes type) {
 	return !(type == Codes::START || type == Codes::UNKNOWN || type == Codes::END);
