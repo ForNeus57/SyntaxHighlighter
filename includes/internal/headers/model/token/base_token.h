@@ -68,12 +68,13 @@ class BaseToken {
 			START					= 0,		//	Not a real code of a Token, simple helper to iterate over the codes
 			KEYWORD					= 1,		//
 			IDENTIFIER				= 2,
-			CONSTANTS				= 3,
-			SPECIAL_CHARACTERS		= 4,
-			STRINGS					= 5,
-			OPERATOR				= 6,
-			UNKNOWN					= 7,		//	Error value
-			END						= 8			//	Not a real code of a Token, simple helper to iterate over the codes
+			LITERAL_INT				= 3,
+			LITERAL_DOUBLE			= 4,
+			SPECIAL_CHARACTERS		= 5,
+			STRINGS					= 6,
+			OPERATOR				= 7,
+			UNKNOWN					= 8,		//	Error value
+			END						= 9			//	Not a real code of a Token, simple helper to iterate over the codes
 		};
 	public:
 		/**
@@ -82,7 +83,7 @@ class BaseToken {
 		 * @throws	std::invalid_argument	-	When ...
 		 */
 		explicit BaseToken(Codes, std::size_t, std::size_t);
-		~BaseToken() = default;
+		virtual ~BaseToken() = default;
 		BaseToken(const BaseToken&) = default;
 		BaseToken(BaseToken&&) = default;
 	public:

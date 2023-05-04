@@ -21,6 +21,7 @@ const std::vector<std::string> BaseToken::POSSIBLE_COLOURS = {
 		"Aqua",						//	Corresponds to ...
 		"SkyBlue",					//	...
 		"Wheat",					//	...
+		"Navy",
 		"StaleGray",				//	...
 		"RosyBrown",				//	...
 		"Olive"						//	...
@@ -58,8 +59,10 @@ std::string BaseToken::convertCodesToString(Codes type) {
 			return "KEYWORD";
 		case Codes::IDENTIFIER:
 			return "IDENTIFIER";
-		case Codes::CONSTANTS:
-			return "CONSTANTS";
+		case Codes::LITERAL_INT:
+			return "LITERAL_INT";
+		case Codes::LITERAL_DOUBLE:
+			return "LITERAL_DOUBLE";
 		case Codes::SPECIAL_CHARACTERS:
 			return "SPECIAL_CHARACTERS";
 		case Codes::STRINGS:

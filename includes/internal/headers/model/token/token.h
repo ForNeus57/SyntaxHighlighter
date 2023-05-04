@@ -44,6 +44,7 @@ class Token final: public BaseToken {
 		Token(BaseToken::Codes code, ValueType value, std::size_t line, std::size_t column);
 		Token(const Token&) = default;
 		Token(Token&&) noexcept = default;
+		~Token() override = default;
 	public:
 		Token& operator=(const Token&) = default;
 		Token& operator=(Token&&) noexcept = default;

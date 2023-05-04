@@ -5,14 +5,34 @@
 #include <gmock/gmock.h>
 #include <cctype>
 #include <algorithm>
+#include <fstream>
 
 #include "../../includes/internal/headers/model/token/base_token.h"
 
 
+std::vector<std::size_t> getTestDataFromFile(const std::string& file_name) {
+	int num_values;
+	
+	// Read the number of values from the binary file
+	std::ifstream file(file_name, std::ios::binary);
+	if (file.is_open())
+		file.read(reinterpret_cast<char*>(&num_values), sizeof(int));
+	else
+		throw std::runtime_error("Unable to input text file:" + file_name);
+	
+	// Read the values from the binary file
+	std::vector<std::size_t> values(static_cast<std::size_t>(num_values));
+	file.read(reinterpret_cast<char*>(values.data()), unsigned(num_values) * sizeof(int));
+	
+	file.close();
+	
+	return values;
+}
+
 class BaseTokenMock: public BaseToken {
 	public:
 		BaseTokenMock(Codes c, std::size_t line, std::size_t col): BaseToken(c, line, col) {}
-		virtual ~BaseTokenMock() = default;
+		~BaseTokenMock() override = default;
 	public:
 		MOCK_METHOD(std::string, print, (), (const override));
 		MOCK_METHOD(std::string, printHTML, (), (const override));
@@ -20,20 +40,17 @@ class BaseTokenMock: public BaseToken {
 
 class BaseTokenTest: public ::testing::Test {
 	protected:
-		BaseTokenTest(): m0(nullptr), TEST_STRING("TEST") {
-			m0 = nullptr;
-			TEST_STRING = "TEST";
-			DEFAULT_TEXT_POSITION = 0;
-			TEST_VALUES = {1049544336, 1074442503, 687392545, 1955552446, 1168883164, 415136718, 1398007497, 17107835, 609012671, 271730254, 841420711, 247809451, 1090393496, 562900903, 642651866, 1736305822, 1189710974, 1433360269, 1366822096, 176765774, 1692468001, 1437163006, 1957229471, 1300716634, 608641288, 612721961, 396322064, 1489715469, 880426812, 2044843973, 760576420, 1058537775, 1611151479, 1657655478, 1513337099, 1412088066, 133259820, 1672178320, 1187225268, 1851841892, 751518114, 689080411, 1864862519, 1158622757, 1512839724, 1172072986, 1813160815, 803472151, 1072352519, 1718470390, 420161254, 2067614707, 159945084, 1218305715, 425805724, 1388064247, 15727944, 193746856, 1693862347, 1670321136, 1087408429, 911855168,439179920, 351065485, 1572328760, 724255089, 776494519, 1105773086, 141525793, 257020689, 1966802994, 762097185, 502907825, 1628649589, 1079205414, 316762934, 303953491, 1713829664, 1562660061, 175715709, 141425976, 263001029, 1095674622, 636631028, 127073472, 1175641095, 1121244765, 2100698576, 565255243, 302486843, 1525295218, 61403657, 673321950, 1251157237, 540132037, 792868266, 1200370492, 652677929, 1717207950, 1735077415};
+		BaseTokenTest(): m0(nullptr), TEST_STRING("TEST"), DEFAULT_TEXT_POSITION(0), TEST_VALUES() {
+			TEST_VALUES = getTestDataFromFile(R"(..\..\tests\input\test_data\random_size_t_values.bin)");
 		}
 		void SetUp() override {
 			m0 = std::make_unique<BaseTokenMock>(BaseToken::Codes::KEYWORD, 0, 0);
 		}
 		void TearDown() override {}
 		std::unique_ptr<BaseTokenMock> m0;
-		std::array<std::size_t, 100> TEST_VALUES;
 		std::string TEST_STRING;
 		std::size_t DEFAULT_TEXT_POSITION;
+		std::vector<std::size_t> TEST_VALUES;
 };
 
 TEST_F(BaseTokenTest, StaticMethodsTest) {
@@ -41,7 +58,8 @@ TEST_F(BaseTokenTest, StaticMethodsTest) {
 	EXPECT_EQ("START", BaseToken::convertCodesToString(BaseToken::Codes::START));
 	EXPECT_EQ("KEYWORD", BaseToken::convertCodesToString(BaseToken::Codes::KEYWORD));
 	EXPECT_EQ("IDENTIFIER", BaseToken::convertCodesToString(BaseToken::Codes::IDENTIFIER));
-	EXPECT_EQ("CONSTANTS", BaseToken::convertCodesToString(BaseToken::Codes::CONSTANTS));
+	EXPECT_EQ("LITERAL_INT", BaseToken::convertCodesToString(BaseToken::Codes::LITERAL_INT));
+	EXPECT_EQ("LITERAL_DOUBLE", BaseToken::convertCodesToString(BaseToken::Codes::LITERAL_DOUBLE));
 	EXPECT_EQ("SPECIAL_CHARACTERS", BaseToken::convertCodesToString(BaseToken::Codes::SPECIAL_CHARACTERS));
 	EXPECT_EQ("STRINGS", BaseToken::convertCodesToString(BaseToken::Codes::STRINGS));
 	EXPECT_EQ("OPERATOR", BaseToken::convertCodesToString(BaseToken::Codes::OPERATOR));
@@ -101,16 +119,19 @@ TEST_F(BaseTokenTest, MainConstructorTest) {
 		EXPECT_NO_THROW(BaseTokenMock(static_cast<BaseToken::Codes>(i), DEFAULT_TEXT_POSITION, DEFAULT_TEXT_POSITION));
 }
 
-TEST_F(BaseTokenTest, GettersAndSettersTest) {
+TEST_F(BaseTokenTest, GettersAndSettersAndMemoryLeakTest) {
 	//	Getter methods
 	for(std::size_t i: TEST_VALUES) {
 		for(std::size_t j: TEST_VALUES) {
 			for(std::size_t k = 1; k < BaseToken::Codes::END - 2; ++k) {
 				m0 = std::make_unique<BaseTokenMock>(static_cast<BaseToken::Codes>(k), i, j);
+				ASSERT_NE(m0.get(), nullptr);
 				EXPECT_EQ(static_cast<BaseToken::Codes>(k), m0->getCode());
 				EXPECT_EQ(i, m0->getLine());
 				EXPECT_EQ(j, m0->getColumn());
 				EXPECT_TRUE(std::find(BaseToken::POSSIBLE_COLOURS.begin(), BaseToken::POSSIBLE_COLOURS.end(), m0->getColour()) != BaseToken::POSSIBLE_COLOURS.end());
+				m0.reset();
+				ASSERT_EQ(m0.get(), nullptr);
 			}
 		}
 	}

@@ -10,12 +10,18 @@
 #ifndef COMPILATION_THEORY_AND_COMPILERS_STATE_H
 #define COMPILATION_THEORY_AND_COMPILERS_STATE_H
 
+
 #include <iostream>
+#include <memory>
+#include <functional>
+#include <utility>
 
 #include "../token/token.h"
+#include "../../exceptions/error_state_reached.h"
+
 
 /**
- * @brief
+ * @brief	Class representing single State in Automata class. It is also responsible of creating correct token pointer to base class.
  * @see		Automata class
  */
 class State {
@@ -44,17 +50,36 @@ class State {
 		State& operator=(const State& rhs) = default;
 		State& operator=(State&& rhs) noexcept = default;
 	public:
-		BaseToken::Codes getReturnCode() const;
-		bool isAccepting() const;
-	private:
 		/**
-		 * @brief	Instructions given to a Token constructor how to create token.
+		 * @brief
+		 * @return
 		 */
-		BaseToken::Codes return_code;
+		BaseToken::Codes getReturnCode() const;
+		/**
+		 * @brief
+		 * @return
+		 */
+		bool isAccepting() const;
+	public:
+		/**
+		 * @brief
+		 *
+		 * @todo	Make this method more safe to use
+		 *
+		 * @return
+		 */
+		std::unique_ptr<BaseToken> constructToken(const std::string&, std::size_t, std::size_t);
+	public:
+		const static std::vector<std::function<std::unique_ptr<BaseToken>(BaseToken::Codes, const std::string&, std::size_t, std::size_t)>> token_constructor_dispatcher;
+	private:
 		/**
 		 * @brief	True / false if this state is accepting and have a meaning full value stored in a
 		 */
 		bool is_accepting;
+		/**
+		 * @brief	Instructions given to a Token constructor how to create token.
+		 */
+		BaseToken::Codes return_code;
 };
 
 #endif	//	COMPILATION_THEORY_AND_COMPILERS_STATE_H
