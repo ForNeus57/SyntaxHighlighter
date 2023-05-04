@@ -35,6 +35,7 @@ TEST_F(StateTest, ConstructorTest) {
 }
 
 TEST_F(StateTest, StaticVariablesTest) {
+
 }
 
 TEST_F(StateTest, ConstructionTest) {

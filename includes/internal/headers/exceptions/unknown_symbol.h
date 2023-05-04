@@ -8,18 +8,21 @@
 #include <exception>
 #include <string>
 
-class WrongInputAlphabet: public std::exception {
+class UnknownSymbol: public std::exception {
 	public:
-		explicit WrongInputAlphabet(const std::string& in) {
-			this->message += "Error occurred while trying to scan next token: " + in + '\n';
-		}
+		explicit UnknownSymbol(const std::string& input_that_lead_to_error): message(
+			"Provided character is not supported by this model! Unknown symbol (symbol not from accepted alphabet) occurred while trying to scan token: " + input_that_lead_to_error + '\n'
+		) {}
 	public:
 		const char* what () const noexcept override {
 			return message.c_str();
 		}
+		std::string getErrorInput() const {
+			return this->error_input;
+		}
 	private:
-		std::string message = "Provided character is not supported by this model!\n"
-							  "Additional info: ";
+		std::string message;
+		std::string error_input;
 };
 
 

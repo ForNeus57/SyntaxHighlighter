@@ -15,7 +15,7 @@ const std::vector<std::vector<char>> BaseToken::INPUT_ALPHABET = {
 		//	INPUT_ALPHABET[BaseToken::Alphabet::WHITE_CHARACTERS][n] 	- All the white symbols
 		{' ', '\n', '\t', '\v', '\f', '\r'},
 		//	INPUT_ALPHABET[BaseToken::Alphabet::OPERATORS][n] 			- All the other symbols
-		{'(', ')', '*', '+', '-', '/'}
+		{';', ':','#', '{', '}', '[',']', '(', ')', '*', '+', '-', '/', '&', '|', '!', '=', '<', '>', ',', '.', '^', '~'}
 };
 const std::vector<std::string> BaseToken::POSSIBLE_COLOURS = {
 		"Aqua",						//	Corresponds to ...

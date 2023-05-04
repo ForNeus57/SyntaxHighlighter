@@ -1,7 +1,7 @@
 /**
  * @file 	automata.h
  * @version 0.027
- * @author 	Dominik Breksa, dominikbreksa@gmail.com
+ * @author 	Dominik Breksa
  * @date 	08.03.2023
  * @brief	Header file relating to Automata class.
  * @see		automata.cpp file.
@@ -14,14 +14,16 @@
 #include <cstddef>			// 	std::size_t
 #include <vector>
 #include <map>
+#include <algorithm>
 
 #include "../token/base_token.h"
 #include "state.h"
-#include "../../exceptions/cannot_create_token_not_from_finishing_state.h"
+#include "../../exceptions/unknown_symbol.h"
 
 /**
  * @brief	Implementation of DFA (Deterministic Finite Automata), that is used by the model to construct next Tokens.
- * @note
+ *
+ * @note	Skips all BaseToken::INPUT_ALPHABET[BaseToken::Alphabet::WHITE_SPACE] symbols when creating token values.
  */
 class Automata {
 	public:
@@ -45,7 +47,7 @@ class Automata {
 		 *
 		 * @return	Created token.
 		 */
-		Token generateTokenOutOfCurrentState(std::size_t, std::size_t);
+		std::unique_ptr<BaseToken> generateTokenOutOfCurrentState(std::size_t, std::size_t);
 		/**
 		 * @brief	Extra information that
 		 * @return	True / false it there occurs a need to subtract 1 from index, to process specific letter once more.
@@ -66,8 +68,8 @@ class Automata {
 		bool isInAcceptingState() const;
 	private:
 		void initializeStateTable();
-		void initializeInputAlphabetMap();
-		void initializeTransitionFunction();
+		void initializeInputAlphabetMap(const std::vector<std::vector<char>>& alphabet);
+		void initializeTransitionFunction(const std::vector<std::vector<char>>& alphabet);
 	public:
 		/**
 		 * @brief	The state index, that will be assigned as a starting one.
@@ -104,13 +106,6 @@ class Automata {
 		 * @brief	The input that have lead this automata to accepting state.
 		 */
 		std::string input_since_last_reset;
-		/**
-		 * @brief	Exactly the same as Token::INPUT_ALPHABET.
-		 * @todo	Consider removing this variable and assigning it to the constructor and passing it to initialize methods.
-		 *
-		 * @see		Token::INPUT_ALPHABET variable in Token class.
-		 */
-		const std::vector<std::vector<char>> alphabet;
 };
 
 

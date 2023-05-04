@@ -8,7 +8,7 @@ set(SRC
 		${LIB_DIRECTORY}/sources/common/file_wrapper.cpp
 		${LIB_DIRECTORY}/sources/common/statistics.cpp
 		#${LIB_DIRECTORY}/sources/model/scanner.cpp
-		#${LIB_DIRECTORY}/sources/model/automata/automata.cpp
+		${LIB_DIRECTORY}/sources/model/automata/automata.cpp
 		${LIB_DIRECTORY}/sources/model/automata/state.cpp
 		${LIB_DIRECTORY}/sources/model/token/base_token.cpp
 		${LIB_DIRECTORY}/sources/model/token/token.cpp

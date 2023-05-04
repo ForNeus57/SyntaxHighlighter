@@ -64,6 +64,9 @@ public:
 	/**
 	 * @brief	Generates token from provided string.
 	 * @todo	Make such that we cannot try to generate token out of empty string(because in that case created token can be unpredictable - Token::UNKNOWN).
+	 *
+	 * @todo 	fdsnaddajusdsajdasdsadas Make such all the white space is translated imidietly, becouse non of the tokens is using white space -> imidiet stop ......
+	 *
 	 * @return	Constructed token, ready to be parsed by another module.
 	 */
 	std::optional<Token> getToken();
