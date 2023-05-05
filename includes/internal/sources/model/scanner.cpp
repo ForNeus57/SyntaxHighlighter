@@ -9,7 +9,7 @@
 
 #include "../../headers/model/scanner.h"
 
-Scanner::Scanner(): col_index(Scanner::RESET_INDEX), line_index(Scanner::RESET_INDEX), shift_index(Scanner::RESET_INDEX), difference(Scanner::RESET_INDEX), A(BaseToken::INPUT_ALPHABET){}
+Scanner::Scanner(): col_index(Scanner::RESET_INDEX), line_index(Scanner::RESET_INDEX), A(BaseToken::INPUT_ALPHABET){}
 
 std::stringstream Scanner::operator()(std::istream* in, std::ostream* out, std::string (BaseToken::*format)() const) {
 	std::stringstream s;
@@ -48,8 +48,6 @@ void Scanner::operator()(std::ifstream& in_file, std::ofstream& out_file, std::s
 void Scanner::addNextLine(const std::string& in) {
 	this->input = in;
 	this->col_index = Scanner::RESET_INDEX;
-	this->shift_index = Scanner::RESET_INDEX;
-	this->difference = Scanner::RESET_INDEX;
 	this->line_index++;
 }
 std::string Scanner::processLine() {
@@ -67,9 +65,6 @@ std::string Scanner::processLine() {
 		}
 		if (generated_token) {
 			std::string print{};
-			std::size_t shift = generated_token.value()->valueShift();
-			std::size_t tmp_shift = generated_token.value()->printHTMLShift();
-			std::cout <<BaseToken::convertCodesToString(generated_token.value()->getCode()) << std::endl;
 			switch (generated_token.value()->getCode()) {
 				case BaseToken::KEYWORD:
 				case BaseToken::IDENTIFIER:
@@ -97,10 +92,8 @@ std::string Scanner::processLine() {
 					auto* token_string = dynamic_cast<Token<std::string>*>(generated_token.value().get());
 					if (token_string->getValue().size() == 1 and token_string->getValue()[0] == '<') {
 						print = "<pra style=\"color: " + token_string->getColour() +"\">&lt</pra>";
-						shift = 3;
 					} else if (token_string->getValue().size() == 1 and token_string->getValue()[0] == '>') {
 						print = "<pra style=\"color: " + token_string->getColour() +"\">&gt</pra>";
-						shift = 3;
 					} else {
 						print = token_string->printHTML();
 					}
@@ -116,27 +109,20 @@ std::string Scanner::processLine() {
 					print = "";
 					break;
 			}
-			std::cout << print << std::endl;
-			std::cout << this->col_index << std::endl;
 			output.append(print);
-			this->shift_index += tmp_shift;
-			std::cout << output << std::endl;
 		} else break;
 	}
 	return output;
 }
 std::optional<std::unique_ptr<BaseToken>> Scanner::getToken() {
-	difference = Scanner::RESET_INDEX;
 	//	Make sure we are at the accepting state
-	for (; !A.isInAcceptingState() and col_index < input.size(); col_index++, shift_index++, difference++)
+	for (; !A.isInAcceptingState() and col_index < input.size(); col_index++)
 		A.changeState(input[col_index]);
 	if (A.isInAcceptingState()) {
 		//	See what state we are in add create token with states instructions.
 		std::unique_ptr<BaseToken> t = A.generateTokenOutOfCurrentState(line_index, col_index + 1);
 		if (A.synchroniseIndex()) {
 			col_index--;
-			shift_index--;
-			difference--;
 		}
 		//	Reset DFA current input, to be ready for next token.
 		A.reset();

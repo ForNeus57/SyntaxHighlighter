@@ -97,8 +97,6 @@ private:	//	Empty space for private class methods.
 		 * @see		token.h file.
 		 */
 		std::size_t line_index;
-		std::size_t shift_index;
-		std::size_t difference;
 		/**
 		 * @brief
 		 *
