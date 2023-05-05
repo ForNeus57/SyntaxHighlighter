@@ -17,7 +17,8 @@
 
 #include "token/token.h"
 #include "automata/automata.h"
-#include "scanner.h"
+#include "../exceptions/unknown_symbol.h"
+#include "../exceptions/error_state_reached.h"
 
 
 /**
@@ -59,7 +60,7 @@ public:
 	 * @brief
 	 * @return
 	 */
-	std::string processLine(std::string (BaseToken::*format)() const);
+	std::string processLine();
 	/**
 	 * @brief	Generates token from provided string.
 	 *
@@ -96,6 +97,8 @@ private:	//	Empty space for private class methods.
 		 * @see		token.h file.
 		 */
 		std::size_t line_index;
+		std::size_t shift_index;
+		std::size_t difference;
 		/**
 		 * @brief
 		 *

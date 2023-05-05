@@ -117,6 +117,9 @@ class BaseToken {
 	public:
 		virtual std::string print() const = 0;
 		virtual std::string printHTML() const = 0;
+		virtual std::size_t valueShift() const = 0;
+		virtual std::size_t printShift() const = 0;
+		virtual std::size_t printHTMLShift() const = 0;
 	private:
 		static std::vector<Codes> generateIterator();
 		static std::size_t getNumberOfCodes();

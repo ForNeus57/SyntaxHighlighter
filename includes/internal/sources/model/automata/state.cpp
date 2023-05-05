@@ -45,7 +45,10 @@ const std::vector<std::function<std::unique_ptr<BaseToken>(BaseToken::Codes, con
 		return std::unique_ptr<BaseToken>(new Token<std::string>(token_code, input, line, column));
 	},
 	[](BaseToken::Codes token_code, const std::string& input, std::size_t line, std::size_t column) -> std::unique_ptr<BaseToken> {		//	If the index == BaseToken::Codes::OPERATOR
-		return std::unique_ptr<BaseToken>(new Token<std::string>(token_code, input, line, column));
+		std::string change(input);
+		change = std::regex_replace(change, std::regex(" "), "&nbsp");
+		change = std::regex_replace(change, std::regex("\t"), "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp");
+		return std::unique_ptr<BaseToken>(new Token<std::string>(token_code, change, line, column));
 	},
 	std::function<std::unique_ptr<BaseToken>(BaseToken::Codes, const std::string&, std::size_t, std::size_t)>(),						//	If the index == BaseToken::Codes::UNKNOWN throw an exception
 	std::function<std::unique_ptr<BaseToken>(BaseToken::Codes, const std::string&, std::size_t, std::size_t)>()							//	If the index == BaseToken::Codes::End throw an exception
@@ -53,9 +56,9 @@ const std::vector<std::function<std::unique_ptr<BaseToken>(BaseToken::Codes, con
 
 
 State::State(): is_accepting(false), synchronize_index(false), return_code(BaseToken::Codes::UNKNOWN) {}
-State::State(BaseToken::Codes c, bool index): is_accepting(true), synchronize_index(index), return_code() {
+State::State(BaseToken::Codes c, bool index): is_accepting(true), synchronize_index(index), return_code(BaseToken::Codes::START) {
 	//	BaseToken::Codes::UNKNOWN can be final for example it can be error state
-	if (!(c == BaseToken::Codes::START || c == BaseToken::Codes::END)) throw std::invalid_argument("Provided code for an argument is not a valid one! Please refer to: BaseToken::isValidCode({Provided BaseToke::Codes value}) static method.");
+	if (c == BaseToken::Codes::START || c == BaseToken::Codes::END) throw std::invalid_argument("Provided code for an argument is not a valid one! Please refer to: BaseToken::isValidCode({Provided BaseToke::Codes value}) static method.");
 	
 	this->return_code = c;
 }

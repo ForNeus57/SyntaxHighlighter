@@ -83,17 +83,17 @@ class Token final: public BaseToken {
 		 * @brief	Method ....
 		 * @return 	The length of std::string(this->Value).size()
 		 */
-		std::size_t valueShift() const;
+		std::size_t valueShift() const override;
 		/**
 		 * @brief
 		 * @return 	this->print().size() - this->ValueShift()
 		 */
-		std::size_t printShift() const;
+		std::size_t printShift() const override;
 		/**
 		 * @brief
 		 * @return	this->printHTML().size() - this->ValueShift()
 		 */
-		std::size_t printHTMLShift() const;
+		std::size_t printHTMLShift() const override;
 	private:
 		/**
 		 * @brief	Value stored of a token.

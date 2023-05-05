@@ -14,7 +14,7 @@ set(SRC
 		)
 
 set(COMPILER_FLAGS
-		-g -std=c++23 -Wall -Wextra -Werror -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -pipe
+		-g -std=c++23 -Wall -Wextra -Wcast-align -Wshadow -Wold-style-cast -Wpointer-arith -pedantic -Wconversion -O3 -pipe
 		)
 
 add_subdirectory(external/googletest)

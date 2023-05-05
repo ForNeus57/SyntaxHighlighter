@@ -20,13 +20,17 @@ void Automata::changeState(char in) {
 	if (this->input_map.find(in) == this->input_map.end()) throw UnknownSymbol(this->input_since_last_reset);
 
 	this->current_state_number = this->transition_function[this->current_state_number][this->input_map[in]];
+	this->input_since_last_reset.push_back(in);
 }
 
 std::unique_ptr<BaseToken> Automata::generateTokenOutOfCurrentState(std::size_t line, std::size_t column) {
 	//	Prevent creation of a token not from final state.
 	if(!this->isInAcceptingState()) throw std::runtime_error("Cannot attempt to generate a token not from accepting state!");
 	try {
-		return this->state_table[this->current_state_number].constructToken(this->input_since_last_reset, line, column);
+		if (this->synchroniseIndex()) {
+			return this->state_table[this->current_state_number].constructToken(this->input_since_last_reset.substr(0, this->input_since_last_reset.size() - 1), line, column);
+		} else
+			return this->state_table[this->current_state_number].constructToken(this->input_since_last_reset, line, column);
 	} catch(ErrorStateReached& err) {
 		std::cerr << err.what();
 		exit(1);
@@ -138,6 +142,7 @@ void Automata::initializeTransitionFunction(const std::vector<std::vector<char>>
 	this->transition_function[0][this->input_map['#']] = 7;
 	this->transition_function[0][this->input_map[':']] = 7;
 	this->transition_function[0][this->input_map[';']] = 7;
+	this->transition_function[0][this->input_map['%']] = 7;
 	
 	this->transition_function[0][this->input_map['"']] = 8;
 	

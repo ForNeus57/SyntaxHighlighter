@@ -15,6 +15,7 @@
 #include <memory>
 #include <functional>
 #include <algorithm>
+#include <regex>
 
 #include "../token/token.h"
 #include "../../exceptions/error_state_reached.h"

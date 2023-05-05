@@ -36,6 +36,9 @@ class BaseTokenMock: public BaseToken {
 	public:
 		MOCK_METHOD(std::string, print, (), (const override));
 		MOCK_METHOD(std::string, printHTML, (), (const override));
+		MOCK_METHOD(std::size_t , valueShift, (), (const override));
+		MOCK_METHOD(std::size_t , printShift, (), (const override));
+		MOCK_METHOD(std::size_t , printHTMLShift, (), (const override));
 };
 
 class BaseTokenTest: public ::testing::Test {
