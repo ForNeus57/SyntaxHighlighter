@@ -14,7 +14,7 @@
 #include <iostream>
 #include <memory>
 #include <functional>
-#include <utility>
+#include <algorithm>
 
 #include "../token/token.h"
 #include "../../exceptions/error_state_reached.h"
@@ -35,7 +35,7 @@ class State {
 		 *
 		 * @param	c	-
 		 */
-		explicit State(BaseToken::Codes c);
+		explicit State(BaseToken::Codes c, bool);
 		/**
 		 * @brief
 		 * @param source
@@ -60,6 +60,7 @@ class State {
 		 * @return
 		 */
 		bool isAccepting() const;
+		bool getSynchronizeIndex() const;
 	public:
 		/**
 		 * @brief
@@ -76,6 +77,7 @@ class State {
 		 * @brief	True / false if this state is accepting and have a meaning full value stored in a
 		 */
 		bool is_accepting;
+		bool synchronize_index;
 		/**
 		 * @brief	Instructions given to a Token constructor how to create token.
 		 */

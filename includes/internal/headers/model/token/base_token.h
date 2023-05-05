@@ -73,8 +73,9 @@ class BaseToken {
 			SPECIAL_CHARACTERS		= 5,
 			STRINGS					= 6,
 			OPERATOR				= 7,
-			UNKNOWN					= 8,		//	Error value
-			END						= 9			//	Not a real code of a Token, simple helper to iterate over the codes
+			WHITE_SYMBOL			= 8,
+			UNKNOWN					= 9,		//	Error value
+			END						= 10		//	Not a real code of a Token, simple helper to iterate over the codes
 		};
 	public:
 		/**
@@ -115,7 +116,7 @@ class BaseToken {
 		static bool isValidCode(Codes);
 	public:
 		virtual std::string print() const = 0;
-		virtual std::string  printHTML() const = 0;
+		virtual std::string printHTML() const = 0;
 	private:
 		static std::vector<Codes> generateIterator();
 		static std::size_t getNumberOfCodes();

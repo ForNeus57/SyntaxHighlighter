@@ -20,9 +20,6 @@ void Automata::changeState(char in) {
 	if (this->input_map.find(in) == this->input_map.end()) throw UnknownSymbol(this->input_since_last_reset);
 
 	this->current_state_number = this->transition_function[this->current_state_number][this->input_map[in]];
-	if (std::find(BaseToken::INPUT_ALPHABET[BaseToken::Alphabet::WHITE_CHARACTERS].begin(), BaseToken::INPUT_ALPHABET[BaseToken::Alphabet::WHITE_CHARACTERS].end(), in) == BaseToken::INPUT_ALPHABET[BaseToken::Alphabet::WHITE_CHARACTERS].end()){
-		this->input_since_last_reset.push_back(in);
-	}
 }
 
 std::unique_ptr<BaseToken> Automata::generateTokenOutOfCurrentState(std::size_t line, std::size_t column) {
@@ -37,15 +34,7 @@ std::unique_ptr<BaseToken> Automata::generateTokenOutOfCurrentState(std::size_t 
 }
 
 bool Automata::synchroniseIndex() {
-	if(!this->isInAcceptingState()) return false;
-
-	/*switch (this->state_table[this->current_state_number].getReturnCode()) {
-		case Codes::IDENTIFIER: case Codes::UNSIGNED_INTEGER_NUMBER:
-			return true;
-		case Codes::UNKNOWN: case Codes::LEFT_BRACKET: case Codes::RIGHT_BRACKET: case Codes::TIMES: case Codes::PLUS: case Codes::MINUS: case Codes::DIVIDED:
-			return false;
-	}
-	return false;*/
+	return this->state_table[this->current_state_number].getSynchronizeIndex();
 }
 
 void Automata::reset() {
@@ -61,15 +50,62 @@ void Automata::initializeStateTable() {
 	this->state_table = std::vector<State>();
 	//	Starting State id = 0
 	this->state_table.emplace_back();
-	//	Finishing state
-	for(Codes x : Token::CODES_TYPES) {
-		if(x == Codes::UNKNOWN) continue;
-		else this->state_table.emplace_back(x);
-	}
-	for(size_t i = 0; i < 2; ++i)
-		this->state_table.emplace_back();
-	//	Error state id = 11
+	
+	//	Identifier and keyword state configuration
+	//	1
 	this->state_table.emplace_back();
+	//	2
+	this->state_table.emplace_back(BaseToken::Codes::IDENTIFIER, true);
+	
+	//	Literal int state configuration
+	//	3
+	this->state_table.emplace_back();
+	//	4
+	this->state_table.emplace_back(BaseToken::Codes::LITERAL_INT, true);
+	
+	//	Literal double state configuration
+	//	5
+	this->state_table.emplace_back();
+	//	6
+	this->state_table.emplace_back(BaseToken::Codes::LITERAL_DOUBLE, true);
+	
+	//	Special characters state configuration
+	//	7
+	this->state_table.emplace_back(BaseToken::Codes::SPECIAL_CHARACTERS, false);
+	
+	//	Strings state configuration
+	//	8
+	this->state_table.emplace_back();
+	//	9
+	this->state_table.emplace_back(BaseToken::Codes::STRINGS, false);
+	
+	//	Operator state configuration
+	//	10
+	this->state_table.emplace_back();
+	//	11
+	this->state_table.emplace_back();
+	//	12
+	this->state_table.emplace_back();
+	//	13
+	this->state_table.emplace_back();
+	//	14
+	this->state_table.emplace_back();
+	//	15
+	this->state_table.emplace_back();
+	//	16
+	this->state_table.emplace_back();
+	//	17
+	this->state_table.emplace_back(BaseToken::Codes::OPERATOR, false);
+	//	18
+	this->state_table.emplace_back(BaseToken::Codes::OPERATOR, true);
+	
+	//	19
+	this->state_table.emplace_back();
+	//	20
+	this->state_table.emplace_back(BaseToken::Codes::WHITE_SYMBOL, true);
+	
+	//	Error state id = 21
+	this->state_table.emplace_back(BaseToken::Codes::UNKNOWN, true);
 }
 void Automata::initializeInputAlphabetMap(const std::vector<std::vector<char>>& alphabet) {
 	size_t i = 0;
@@ -82,40 +118,181 @@ void Automata::initializeInputAlphabetMap(const std::vector<std::vector<char>>& 
 
 void Automata::initializeTransitionFunction(const std::vector<std::vector<char>>& alphabet) {
 	//	Allocate the memory and set all the values to error state, for protection.
-	this->transition_function = std::vector<std::vector<std::size_t>>(this->state_table.size(), std::vector<std::size_t>(this->input_map.size(), 11));
-
-	//	Set the next state to other symbols
-	this->transition_function[0][this->input_map['(']] = 1;
-	this->transition_function[0][this->input_map[')']] = 2;
-	this->transition_function[0][this->input_map['*']] = 3;
-	this->transition_function[0][this->input_map['+']] = 4;
-	this->transition_function[0][this->input_map['-']] = 5;
-	this->transition_function[0][this->input_map['/']] = 6;
-
-	for(char i : alphabet[Alphabet::WHITE_CHARACTERS])
-		this->transition_function[0][this->input_map[i]] = 0;
-	for(char i : alphabet[Alphabet::NUMBERS])
-		this->transition_function[0][this->input_map[i]] = 9;
-	for(char i : alphabet[Alphabet::LETTERS])
-		this->transition_function[0][this->input_map[i]] = 10;
-
-	for(char i : alphabet[Alphabet::SYMBOLS])
-		this->transition_function[9][this->input_map[i]] = 7;
-	for(char i : alphabet[Alphabet::WHITE_CHARACTERS])
-		this->transition_function[9][this->input_map[i]] = 7;
-
-	for(char i : alphabet[Alphabet::NUMBERS])
-		this->transition_function[9][this->input_map[i]] = 9;
-	for(char i : alphabet[Alphabet::LETTERS])
-		this->transition_function[9][this->input_map[i]] = 7;
-
-	for(char i : alphabet[Alphabet::SYMBOLS])
-		this->transition_function[10][this->input_map[i]] = 8;
-	for(char i : alphabet[Alphabet::WHITE_CHARACTERS])
-		this->transition_function[10][this->input_map[i]] = 8;
-
-	for(char i : alphabet[Alphabet::NUMBERS])
-		this->transition_function[10][this->input_map[i]] = 10;
-	for(char i : alphabet[Alphabet::LETTERS])
-		this->transition_function[10][this->input_map[i]] = 10;
+	this->transition_function = std::vector<std::vector<std::size_t>>(this->state_table.size(), std::vector<std::size_t>(this->input_map.size(), Automata::ERROR_STATE_NUMBER));
+	
+	//	Initial state configuration
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[0][this->input_map[in]] = 1;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[0][this->input_map[in]] = 3;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[0][this->input_map[in]] = 19;
+	
+	this->transition_function[0][this->input_map['[']] = 7;
+	this->transition_function[0][this->input_map[']']] = 7;
+	this->transition_function[0][this->input_map['(']] = 7;
+	this->transition_function[0][this->input_map[')']] = 7;
+	this->transition_function[0][this->input_map['{']] = 7;
+	this->transition_function[0][this->input_map['}']] = 7;
+	this->transition_function[0][this->input_map[',']] = 7;
+	this->transition_function[0][this->input_map['#']] = 7;
+	this->transition_function[0][this->input_map[':']] = 7;
+	this->transition_function[0][this->input_map[';']] = 7;
+	
+	this->transition_function[0][this->input_map['"']] = 8;
+	
+	this->transition_function[0][this->input_map['*']] = 10;
+	this->transition_function[0][this->input_map['/']] = 10;
+	this->transition_function[0][this->input_map['!']] = 10;
+	this->transition_function[0][this->input_map['=']] = 10;
+	
+	this->transition_function[0][this->input_map['+']] = 11;
+	this->transition_function[0][this->input_map['-']] = 12;
+	this->transition_function[0][this->input_map['|']] = 13;
+	this->transition_function[0][this->input_map['&']] = 14;
+	this->transition_function[0][this->input_map['<']] = 15;
+	this->transition_function[0][this->input_map['>']] = 16;
+	
+	this->transition_function[0][this->input_map['.']] = 17;
+	this->transition_function[0][this->input_map[',']] = 17;
+	this->transition_function[0][this->input_map['^']] = 17;
+	this->transition_function[0][this->input_map['~']] = 17;
+	
+	//	Identifier and keyword state configuration
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[1][this->input_map[in]] = 1;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[1][this->input_map[in]] = 1;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[1][this->input_map[in]] = 2;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[1][this->input_map[in]] = 2;
+	
+	//	Literal int state configuration
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[3][this->input_map[in]] = 4;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[3][this->input_map[in]] = 3;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[3][this->input_map[in]] = 4;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[3][this->input_map[in]] = 4;
+	
+	this->transition_function[3][this->input_map['.']] = 5;
+	
+	//	Literal double state configuration
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[5][this->input_map[in]] = 6;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[5][this->input_map[in]] = 5;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[5][this->input_map[in]] = 6;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[5][this->input_map[in]] = 6;
+	
+	//	Special characters state configuration
+	
+	//	String state configuration
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[8][this->input_map[in]] = 8;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[8][this->input_map[in]] = 8;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[8][this->input_map[in]] = 8;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[8][this->input_map[in]] = 8;
+	
+	this->transition_function[8][this->input_map['"']] = 9;
+	
+	//	Operator state configuration
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[10][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[10][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[10][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[10][this->input_map[in]] = 18;
+	
+	this->transition_function[10][this->input_map['=']] = 17;
+	
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[11][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[11][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[11][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[11][this->input_map[in]] = 18;
+	
+	this->transition_function[11][this->input_map['+']] = 17;
+	this->transition_function[11][this->input_map['=']] = 17;
+	
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[12][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[12][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[12][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[12][this->input_map[in]] = 18;
+	
+	this->transition_function[12][this->input_map['-']] = 17;
+	this->transition_function[12][this->input_map['=']] = 17;
+	
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[13][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[13][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[13][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[13][this->input_map[in]] = 18;
+	
+	this->transition_function[13][this->input_map['|']] = 17;
+	
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[14][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[14][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[14][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[14][this->input_map[in]] = 18;
+	
+	this->transition_function[14][this->input_map['&']] = 17;
+	
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[15][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[15][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[15][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[15][this->input_map[in]] = 18;
+	
+	this->transition_function[15][this->input_map['=']] = 17;
+	this->transition_function[15][this->input_map['<']] = 17;
+	
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[16][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[16][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[16][this->input_map[in]] = 18;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[16][this->input_map[in]] = 18;
+	
+	this->transition_function[16][this->input_map['=']] = 17;
+	this->transition_function[16][this->input_map['>']] = 17;
+	
+	//	White symbols ....
+	for(const char& in : alphabet[BaseToken::Alphabet::LETTERS])
+		this->transition_function[19][this->input_map[in]] = 20;
+	for(const char& in : alphabet[BaseToken::Alphabet::NUMBERS])
+		this->transition_function[19][this->input_map[in]] = 20;
+	for(const char& in : alphabet[BaseToken::Alphabet::WHITE_CHARACTERS])
+		this->transition_function[19][this->input_map[in]] = 19;
+	for(const char& in : alphabet[BaseToken::Alphabet::OPERATORS])
+		this->transition_function[19][this->input_map[in]] = 20;
 }

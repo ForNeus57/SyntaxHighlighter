@@ -15,13 +15,14 @@ const std::vector<std::vector<char>> BaseToken::INPUT_ALPHABET = {
 		//	INPUT_ALPHABET[BaseToken::Alphabet::WHITE_CHARACTERS][n] 	- All the white symbols
 		{' ', '\n', '\t', '\v', '\f', '\r'},
 		//	INPUT_ALPHABET[BaseToken::Alphabet::OPERATORS][n] 			- All the other symbols
-		{';', ':','#', '{', '}', '[',']', '(', ')', '*', '+', '-', '/', '&', '|', '!', '=', '<', '>', ',', '.', '^', '~'}
+		{';', ':','#', '{', '}', '[',']', '(', ')', '*', '+', '-', '/', '&', '|', '!', '=', '<', '>', ',', '.', '^', '~', '"'}
 };
 const std::vector<std::string> BaseToken::POSSIBLE_COLOURS = {
 		"Aqua",						//	Corresponds to ...
 		"SkyBlue",					//	...
 		"Wheat",					//	...
 		"Navy",
+		"Black",
 		"StaleGray",				//	...
 		"RosyBrown",				//	...
 		"Olive"						//	...
@@ -69,6 +70,8 @@ std::string BaseToken::convertCodesToString(Codes type) {
 			return "STRINGS";
 		case Codes::OPERATOR:
 			return "OPERATOR";
+		case Codes::WHITE_SYMBOL:
+			return "WHITE_SYMBOL";
 		case Codes::UNKNOWN:
 			return "UNKNOWN";
 		case Codes::END:

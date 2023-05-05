@@ -2,12 +2,11 @@ set(LIB_DIRECTORY
 		${PROJECT_SOURCE_DIR}/includes/internal
 		)
 
-# comented method are no tested / implemented in a modern way
+#	Comented method are no tested / implemented in a modern way
 set(SRC
 		#${LIB_DIRECTORY}/sources/common/run.cpp
 		${LIB_DIRECTORY}/sources/common/file_wrapper.cpp
-		${LIB_DIRECTORY}/sources/common/statistics.cpp
-		#${LIB_DIRECTORY}/sources/model/scanner.cpp
+		${LIB_DIRECTORY}/sources/model/scanner.cpp
 		${LIB_DIRECTORY}/sources/model/automata/automata.cpp
 		${LIB_DIRECTORY}/sources/model/automata/state.cpp
 		${LIB_DIRECTORY}/sources/model/token/base_token.cpp

@@ -1,10 +1,10 @@
 /**
  * @file 	model.h
  * @version 0.027
- * @author 	Dominik Breksa, dominikbreksa@gmail.com
+ * @author 	Dominik Breksa
  * @date 	08.03.2023
  * @brief	Header file relating to Scanner class.
- * @see		model.cpp
+ * @see		scanner.cpp
 **/
 
 #ifndef COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
@@ -18,7 +18,6 @@
 #include "token/token.h"
 #include "automata/automata.h"
 #include "scanner.h"
-#include "../common/statistics.h"
 
 
 /**
@@ -37,17 +36,17 @@ public:
 	 * @brief	0x0 set sum with 0x1 converted to file stream from string_stream
 	 * @return
 	 */
-	std::stringstream operator()(std::istream*, std::ostream*, std::string (Token::*)() const);
+	std::stringstream operator()(std::istream*, std::ostream*, std::string (BaseToken::*)() const);
 	/**
 	 * @brief	1x0 output string_stream convert to std::cout set sum nx0 for base example and concatenate string_stream set sum nx1 just concatenate to a file instead of a std::cout
 	 * @return
 	 */
-	std::stringstream operator()(std::ifstream&, std::string (Token::*)() const);
+	std::stringstream operator()(std::ifstream&, std::string (BaseToken::*)() const);
 	/**
 	 * @brief	nxn with n > 0 in a for loop n times
 	 * @return
 	 */
-	void operator()(std::ifstream&, std::ofstream&, std::string (Token::*)() const);
+	void operator()(std::ifstream&, std::ofstream&, std::string (BaseToken::*)() const);
 public:
 	/**
 	 * @brief	Changes the input attribute to
@@ -60,16 +59,13 @@ public:
 	 * @brief
 	 * @return
 	 */
-	std::string processLine(std::string (Token::*format)() const);
+	std::string processLine(std::string (BaseToken::*format)() const);
 	/**
 	 * @brief	Generates token from provided string.
-	 * @todo	Make such that we cannot try to generate token out of empty string(because in that case created token can be unpredictable - Token::UNKNOWN).
-	 *
-	 * @todo 	fdsnaddajusdsajdasdsadas Make such all the white space is translated imidietly, becouse non of the tokens is using white space -> imidiet stop ......
 	 *
 	 * @return	Constructed token, ready to be parsed by another module.
 	 */
-	std::optional<Token> getToken();
+	std::optional<std::unique_ptr<BaseToken>> getToken();
 public:
 	/**
 	 * @brief	Method used to check the status of token generation process. If it has finished processing provided line.
@@ -104,6 +100,7 @@ private:	//	Empty space for private class methods.
 		 * @brief
 		 *
 		 * @see		Automata class.
+		 * @see		automata.h file.
 		 */
 		Automata A;
 };

@@ -25,13 +25,13 @@ TEST_F(StateTest, ConstructorTest) {
 	
 	//	Custom constructor
 	for (int i = BaseToken::Codes::START + 1; i < BaseToken::Codes::END; ++i) {
-		state = std::make_unique<State>(static_cast<BaseToken::Codes>(i));
+		state = std::make_unique<State>(static_cast<BaseToken::Codes>(i), false);
 		EXPECT_TRUE(state->isAccepting());
 		EXPECT_EQ(state->getReturnCode(), static_cast<BaseToken::Codes>(i));
 	}
 	
-	EXPECT_THROW(std::make_unique<State>(BaseToken::Codes::START), std::invalid_argument);
-	EXPECT_THROW(std::make_unique<State>(BaseToken::Codes::END), std::invalid_argument);
+	EXPECT_THROW(std::make_unique<State>(BaseToken::Codes::START, false), std::invalid_argument);
+	EXPECT_THROW(std::make_unique<State>(BaseToken::Codes::END, false), std::invalid_argument);
 }
 
 TEST_F(StateTest, StaticVariablesTest) {

@@ -75,6 +75,7 @@ class Automata {
 		 * @brief	The state index, that will be assigned as a starting one.
 		 */
 		const static std::size_t STARTING_STATE_NUMBER = 0;
+		const static std::size_t ERROR_STATE_NUMBER = 21;
 	private:
 		/**
 		 * @brief	The cursor, that points to the index in state_table which corresponds to a specific state.

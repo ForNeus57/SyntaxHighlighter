@@ -4,14 +4,14 @@
  * @author 	Dominik Breksa
  * @date 	08.03.2023
  * @brief	Source file relating to Scanner class.
- * @see		Scanner.cpp
+ * @see		Scanner.h
 **/
 
 #include "../../headers/model/scanner.h"
 
-Scanner::Scanner(): col_index(Scanner::RESET_INDEX), line_index(Scanner::RESET_INDEX),  A(Token::INPUT_ALPHABET) {}
+Scanner::Scanner(): col_index(Scanner::RESET_INDEX), line_index(Scanner::RESET_INDEX),  A(BaseToken::INPUT_ALPHABET) {}
 
-std::stringstream Scanner::operator()(std::istream* in, std::ostream* out, std::string (Token::*format)() const) {
+std::stringstream Scanner::operator()(std::istream* in, std::ostream* out, std::string (BaseToken::*format)() const) {
 	std::stringstream s;
 	std::string line;
 	
@@ -26,7 +26,7 @@ std::stringstream Scanner::operator()(std::istream* in, std::ostream* out, std::
 	
 	return s;
 }
-std::stringstream Scanner::operator()(std::ifstream& in_file, std::string (Token::*format)() const) {
+std::stringstream Scanner::operator()(std::ifstream& in_file, std::string (BaseToken::*format)() const) {
 	std::stringstream s;
 	std::string line;
 	
@@ -37,7 +37,7 @@ std::stringstream Scanner::operator()(std::ifstream& in_file, std::string (Token
 	
 	return s;
 }
-void Scanner::operator()(std::ifstream& in_file, std::ofstream& out_file, std::string (Token::*format)() const) {
+void Scanner::operator()(std::ifstream& in_file, std::ofstream& out_file, std::string (BaseToken::*format)() const) {
 	std::string line;
 	
 	while(std::getline(in_file, line)) {
@@ -50,7 +50,7 @@ void Scanner::addNextLine(const std::string& in) {
 	this->col_index = Scanner::RESET_INDEX;
 	this->line_index++;
 }
-std::string Scanner::processLine(std::string (Token::* format)() const) {
+std::string Scanner::processLine(std::string (BaseToken::* format)() const) {
 	std::string output(this->input);
 	while(!this->isEmpty()) {							//	Generate all the tokens in this line.
 		std::optional<Token> generated_token;
@@ -79,7 +79,7 @@ std::string Scanner::processLine(std::string (Token::* format)() const) {
 	}
 	return output;
 }
-std::optional<Token> Scanner::getToken() {
+std::optional<std::unique_ptr<BaseToken>> Scanner::getToken() {
 	//	Make sure we are at the accepting state
 	for(; !A.isInAcceptingState() and col_index < input.size(); col_index++)
 		A.changeState(input[col_index]);
