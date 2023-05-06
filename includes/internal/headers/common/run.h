@@ -2,8 +2,8 @@
 // Created by Dominik on 28.03.2023.
 //
 
-#ifndef BASIC_COMPILER_RUN_H
-#define BASIC_COMPILER_RUN_H
+#ifndef SYNTAX_HIGHLIGHTER_RUN_H
+#define SYNTAX_HIGHLIGHTER_RUN_H
 
 
 #include <list>
@@ -92,4 +92,4 @@ class Run final {
 };
 
 
-#endif	//	BASIC_COMPILER_RUN_H
+#endif	//	SYNTAX_HIGHLIGHTER_RUN_H

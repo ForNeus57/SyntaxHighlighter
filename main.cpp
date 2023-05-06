@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 	//Run::getInstance(argc, argv)(&std::cin, &std::cout);
 	if (argc < 3) {
 		std::cerr << "Not enough arguments provided!\n";
-		std::cerr << BASIC_COMPILER_HELP_INFO;
+		std::cerr << SYNTAX_HIGHLIGHTER_HELP_INFO;
 		exit(EXIT_FAILURE);
 	}
 	std::ifstream input_file(argv[1], std::ios::in);

@@ -7,8 +7,8 @@
  * @see		automata.cpp file.
 **/
 
-#ifndef COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
-#define COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
+#ifndef SYNTAX_HIGHLIGHTER_AUTOMATA_H
+#define SYNTAX_HIGHLIGHTER_AUTOMATA_H
 
 
 #include <cstddef>			// 	std::size_t
@@ -110,4 +110,4 @@ class Automata {
 };
 
 
-#endif	//	COMPILATION_THEORY_AND_COMPILERS_AUTOMATA_H
+#endif	//	SYNTAX_HIGHLIGHTER_AUTOMATA_H

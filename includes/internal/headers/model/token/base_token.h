@@ -2,8 +2,8 @@
 // Created by Dominik on 11.04.2023.
 //
 
-#ifndef BASIC_COMPILER_BASE_TOKEN_H
-#define BASIC_COMPILER_BASE_TOKEN_H
+#ifndef SYNTAX_HIGHLIGHTER_BASE_TOKEN_H
+#define SYNTAX_HIGHLIGHTER_BASE_TOKEN_H
 
 
 #include <utility>
@@ -171,4 +171,4 @@ class BaseToken {
 };
 
 
-#endif	//	BASIC_COMPILER_BASE_TOKEN_H
+#endif	//	SYNTAX_HIGHLIGHTER_BASE_TOKEN_H

@@ -1,4 +1,4 @@
-## Simple scanner that constructs tokens, which then are used to make C language syntax colorful. [2023 April]
+## Simple scanner that constructs tokens, which then are used to make C language syntax highlighter. [2023 April]
 
 ---
 ### Description:
@@ -42,7 +42,7 @@
    ```
 4. Use the program:
    ```shell
-   Syntax_Colorizer.exe <path/to/input/file.c> <path/to/output/file.html> [;|\n]
+   Syntax_Highlighter.exe <path/to/input/file.c> <path/to/output/file.html> [;|\n]
    ```
 ---
 ### Important:

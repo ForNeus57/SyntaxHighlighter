@@ -2,8 +2,8 @@
 // Created by Dominik on 05.04.2023.
 //
 
-#ifndef BASIC_COMPILER_FILE_WRAPPER_H
-#define BASIC_COMPILER_FILE_WRAPPER_H
+#ifndef SYNTAX_HIGHLIGHTER_FILE_WRAPPER_H
+#define SYNTAX_HIGHLIGHTER_FILE_WRAPPER_H
 
 #include <fstream>
 #include <iostream>
@@ -25,4 +25,4 @@ private:
 };
 
 
-#endif	//	BASIC_COMPILER_FILE_WRAPPER_H
+#endif	//	SYNTAX_HIGHLIGHTER_FILE_WRAPPER_H

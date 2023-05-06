@@ -7,8 +7,8 @@
  * @see		token.cpp file.
 **/
 
-#ifndef COMPILATION_THEORY_AND_COMPILERS_TOKEN_H
-#define COMPILATION_THEORY_AND_COMPILERS_TOKEN_H
+#ifndef SYNTAX_HIGHLIGHTER_TOKEN_H
+#define SYNTAX_HIGHLIGHTER_TOKEN_H
 
 
 #include <iostream>
@@ -106,4 +106,4 @@ class Token final: public BaseToken {
 };
 
 
-#endif	//	COMPILATION_THEORY_AND_COMPILERS_TOKEN_H
+#endif	//	SYNTAX_HIGHLIGHTER_TOKEN_H

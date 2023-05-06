@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
-project(Syntax_Colorizer VERSION 0.3.2.1)
+project(Syntax_Highlighter VERSION 0.3.2.1)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

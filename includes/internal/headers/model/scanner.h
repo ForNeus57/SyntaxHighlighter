@@ -7,8 +7,8 @@
  * @see		scanner.cpp
 **/
 
-#ifndef COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
-#define COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
+#ifndef SYNTAX_HIGHLIGHTER_SCANNER_H
+#define SYNTAX_HIGHLIGHTER_SCANNER_H
 
 #include <optional>
 #include <fstream>
@@ -107,4 +107,4 @@ private:	//	Empty space for private class methods.
 };
 
 
-#endif	//	COMPILATION_THEORY_AND_COMPILERS_SCANNER_H
+#endif	//	SYNTAX_HIGHLIGHTER_SCANNER_H

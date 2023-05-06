@@ -7,8 +7,8 @@
  * @see		state.cpp file.
 **/
 
-#ifndef COMPILATION_THEORY_AND_COMPILERS_STATE_H
-#define COMPILATION_THEORY_AND_COMPILERS_STATE_H
+#ifndef SYNTAX_HIGHLIGHTER_STATE_H
+#define SYNTAX_HIGHLIGHTER_STATE_H
 
 
 #include <iostream>
@@ -85,4 +85,4 @@ class State {
 		BaseToken::Codes return_code;
 };
 
-#endif	//	COMPILATION_THEORY_AND_COMPILERS_STATE_H
+#endif	//	SYNTAX_HIGHLIGHTER_STATE_H

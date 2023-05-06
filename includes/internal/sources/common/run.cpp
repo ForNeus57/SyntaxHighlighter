@@ -41,7 +41,7 @@ Run::Run(int argc, char** argv):
 		this->parse(argc, argv);
 	} catch (const std::exception &exc) {
 		std::cerr << exc.what() << '\n';
-		std::cerr << "usage:" << this->program_name << BASIC_COMPILER_HELP_INFO;
+		std::cerr << "usage:" << this->program_name << SYNTAX_HIGHLIGHTER_HELP_INFO;
 		exit(EXIT_FAILURE);
 	}
 }
@@ -204,13 +204,13 @@ void Run::process_version() {
 	if(Run::flag_version) throw std::runtime_error(this->program_name + " error: cannot use -v/--version parameter twice!");
 	Run::flag_version = true;
 
-	std::cout << this->program_name << " version: " << BASIC_COMPILER_VERSION_MAJOR << "." << BASIC_COMPILER_VERSION_MINOR << "." << BASIC_COMPILER_VERSION_PATCH;
+	std::cout << this->program_name << " version: " << SYNTAX_HIGHLIGHTER_VERSION_MAJOR << "." << SYNTAX_HIGHLIGHTER_VERSION_MINOR << "." << SYNTAX_HIGHLIGHTER_VERSION_PATCH;
 }
 void Run::process_help() {
 	if(Run::flag_help) throw std::runtime_error(this->program_name + " error: cannot use -h/--help parameter twice!");
 	Run::flag_help = true;
 
-	std::cout << "usage:" << this->program_name << " " << BASIC_COMPILER_HELP_INFO;
+	std::cout << "usage:" << this->program_name << " " << SYNTAX_HIGHLIGHTER_HELP_INFO;
 }
 void Run::adjust_thread_behaviour() {
 

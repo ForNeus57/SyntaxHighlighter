@@ -2,8 +2,8 @@
 // Created by Dominik on 14.03.2023.
 //
 
-#ifndef COMPILATION_THEORY_AND_COMPILERS_ERROR_STATE_REACHED_H
-#define COMPILATION_THEORY_AND_COMPILERS_ERROR_STATE_REACHED_H
+#ifndef SYNTAX_HIGHLIGHTER_ERROR_STATE_REACHED_H
+#define SYNTAX_HIGHLIGHTER_ERROR_STATE_REACHED_H
 
 #include <exception>
 #include <string>
@@ -34,4 +34,4 @@ class ErrorStateReached: public std::exception {
 		std::size_t column;
 };
 
-#endif	//	COMPILATION_THEORY_AND_COMPILERS_ERROR_STATE_REACHED_H
+#endif	//	SYNTAX_HIGHLIGHTER_ERROR_STATE_REACHED_H

@@ -1,6 +1,6 @@
-#define BASIC_COMPILER_VERSION_MAJOR @Syntax_Colorizer_VERSION_MAJOR@
-#define BASIC_COMPILER_VERSION_MINOR @Syntax_Colorizer_VERSION_MINOR@
-#define BASIC_COMPILER_VERSION_PATCH @Syntax_Colorizer_VERSION_PATCH@
-#define BASIC_COMPILER_VERSION_TWEAK @Syntax_Colorizer_VERSION_TWEAK@
+#define SYNTAX_HIGHLIGHTER_VERSION_MAJOR @Syntax_Colorizer_VERSION_MAJOR@
+#define SYNTAX_HIGHLIGHTER_VERSION_MINOR @Syntax_Colorizer_VERSION_MINOR@
+#define SYNTAX_HIGHLIGHTER_VERSION_PATCH @Syntax_Colorizer_VERSION_PATCH@
+#define SYNTAX_HIGHLIGHTER_VERSION_TWEAK @Syntax_Colorizer_VERSION_TWEAK@
 
-#define BASIC_COMPILER_HELP_INFO "[-i|--input] <input_files or directory/ies> [-o|--output] <output_files> [-s|--statistics] [-H|--HTML] [-t|--threads] <integer_count> [-h|--help] [-v|--version];\n"
+#define SYNTAX_HIGHLIGHTER_HELP_INFO "[-i|--input] <input_files or directory/ies> [-o|--output] <output_files> [-s|--statistics] [-H|--HTML] [-t|--threads] <integer_count> [-h|--help] [-v|--version];\n"

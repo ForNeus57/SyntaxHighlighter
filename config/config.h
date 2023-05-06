@@ -1,6 +1,6 @@
-#define BASIC_COMPILER_VERSION_MAJOR 0
-#define BASIC_COMPILER_VERSION_MINOR 3
-#define BASIC_COMPILER_VERSION_PATCH 2
-#define BASIC_COMPILER_VERSION_TWEAK 1
+#define SYNTAX_HIGHLIGHTER_VERSION_MAJOR 
+#define SYNTAX_HIGHLIGHTER_VERSION_MINOR 
+#define SYNTAX_HIGHLIGHTER_VERSION_PATCH 
+#define SYNTAX_HIGHLIGHTER_VERSION_TWEAK 
 
-#define BASIC_COMPILER_HELP_INFO "Usage: program.exe <path/to/input/file.c> <path/to/output/file.html> [;|\n]"
+#define SYNTAX_HIGHLIGHTER_HELP_INFO "[-i|--input] <input_files or directory/ies> [-o|--output] <output_files> [-s|--statistics] [-H|--HTML] [-t|--threads] <integer_count> [-h|--help] [-v|--version];\n"
