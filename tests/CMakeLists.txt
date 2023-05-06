@@ -17,5 +17,7 @@ set(COMPILER_FLAGS
 include_directories(${gtest_SOURCE_DIR}/include ${gmock_SOURCE_DIR}/include)
 
 add_executable(Google_Tests_run ${TEST_MAIN} ${TEST})
+
+#	Only place in the entire program where gtest and gmock is linked with any of my executables.
 target_link_libraries(Google_Tests_run gtest gmock ${PROJECT_NAME}-lib)
 target_compile_options(Google_Tests_run PRIVATE ${COMPILER_FLAGS})
