@@ -1,5 +1,4 @@
-## Simple scanner that constructs tokens, which then are used to make C language syntax highlighter. [2023 April]
-
+## C programing language syntax highlighter. [2023 April]
 ---
 ### Description:
 1. Language of implementation: `C++20 and CMake as a project manager`. The main CMake file is located on the same level as `main.cpp` file.
